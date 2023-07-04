@@ -1,0 +1,50 @@
+.header {
+    background-color: #1e293a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+     height: 80px;
+}
+
+.header .logo {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.logo h3 {
+    padding-left: 50px;
+    font-weight: bold;
+    color: red;
+}
+
+ul {
+    display: flex;
+    align-items: center;
+    height: 80px;
+    gap: 30px;
+}
+
+ul li {
+    list-style: none;
+    color: white;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+.link:hover {
+  
+    color: rgb(221, 68, 68);
+    
+}
+
+.menu-link {
+    padding-left: 50px;
+}
+
+
+
+
