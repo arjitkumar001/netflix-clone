@@ -1,8 +1,9 @@
-
+'use client'
 import './globals.css'
 import { Inter } from 'next/font/google'
-import Header from './Components/Header'
 import Footer from './Components/Footer'
+import NavBar from './Components/Nabar'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} style={{backgroundColor:"#0a182d"}}>
-        <Header />
+        <NavBar/>
         {children}
         <Footer />
       </body>

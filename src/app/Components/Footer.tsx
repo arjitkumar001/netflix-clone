@@ -1,10 +1,13 @@
-import React from 'react'
+'use client'
+import React from 'react';
+import  Box from '@mui/material/Box/Box';
+import Typography from '@mui/material/Typography';
 
 const Footer = () => {
   return (
-    <div>
-      <h1>footer section</h1>
-    </div>
+   <Box>
+    <Typography variant='h1'>Footer section</Typography>
+   </Box>
   )
 }
 
