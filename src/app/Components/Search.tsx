@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 
 const style = {
   position: 'absolute' as 'absolute',
-  top: '20%',
+  top: '12%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
 };

@@ -16,8 +16,8 @@ import Link from 'next/link';
 
 
 
-const pages = ['Home', 'TV Shows', 'Movies', 'Recently Added', 'Favorite'];
-const pageLink = ['/', '/tvshow', '/movies', 'recentlyadd', 'favorite'];
+const pages = ['Home', 'TV Shows', 'Movies', 'Recently Added'];
+const pageLink = ['/', '/tvshow', '/movies', '/recentlyadd'];
 
 
 function NavBar() {
@@ -34,7 +34,7 @@ function NavBar() {
 
 
     return (
-        <AppBar position="fixed" sx={{ backgroundColor: " #1e293a" }}>
+        <AppBar position="fixed" sx={{ backgroundColor: " #1e293a",height:"70px" }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography
