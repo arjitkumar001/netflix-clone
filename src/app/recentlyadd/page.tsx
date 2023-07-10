@@ -1,5 +1,5 @@
 'use client'
-import { Recentlymovie } from '../Components/RecentlymovieApi';
+import { Recentlymovie } from '../Components/API/RecentlymovieApi';
 import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -44,7 +44,7 @@ export default function Page() {
     async function fetchDayMovies() {
       try {
         const tvShow = await Recentlymovie();
-        console.log(tvShow);
+        // console.log(tvShow);
         if (tvShow && tvShow.results) {
           setMovie(tvShow.results);
         }

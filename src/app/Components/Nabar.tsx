@@ -1,6 +1,5 @@
 
 import React,{useState} from 'react';
-
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,6 +12,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import NestedModal from './Search';
 import Link from 'next/link';
+
 
 
 
@@ -34,9 +34,9 @@ function NavBar() {
 
 
     return (
-        <AppBar position="fixed" sx={{ backgroundColor: " #1e293a",height:"70px" }}>
-            <Container maxWidth="xl">
-                <Toolbar disableGutters>
+        <AppBar position="fixed" sx={{ backgroundColor: "transparent",boxShadow:"none",height:"70px" }}>
+            <Container  maxWidth="xl">
+                <Toolbar >
                     <Typography
                         variant="h3"
                         noWrap
@@ -127,6 +127,7 @@ function NavBar() {
 
                     <Box sx={{ flexGrow: 0 }}>
                         <NestedModal />
+                        
                     </Box>
                 </Toolbar>
             </Container>

@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
-import { TvShow } from '../Components/TvShows';
+import { TvShow } from '../Components/API/TvShows';
 import Grid from '@mui/material/Grid';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -45,7 +45,7 @@ export default function Page() {
     async function fetchTvShow() {
       try {
         const tvShow = await TvShow();
-        console.log(tvShow);
+        // console.log(tvShow);
         if (tvShow && tvShow.results) {
           setTvShow(tvShow.results);
         }
@@ -70,7 +70,7 @@ export default function Page() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box className="mt-80" sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1,marginTop:"70px" }}>
         <Typography variant="h4" sx={{ color: 'red', padding: '10px 20px', textTransform: 'uppercase', textAlign: 'center', borderBottom: '2px solid gray', borderTop: '2px solid gray' }}>
           TV Shows
         </Typography>
