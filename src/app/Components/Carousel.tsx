@@ -3,12 +3,20 @@ import Image from 'next/image';
 import { Carousel as CarouselComponent } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Typography, Box } from '@mui/material';
-import LinearIndeterminate from './ProgressBar/Progressbar';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import LinearIndeterminate from "@/app/Components/ProgressBar/Progressbar"
+
 
 interface Movie {
   id: number;
   title: string;
   backdrop_path: string;
+  vote_average: number;
+  release_date: string;
+  overview: string
 }
 
 const Carousel = () => {
@@ -41,12 +49,26 @@ const Carousel = () => {
       return () => clearInterval(interval);
     }
   }, [movies]);
+  // useEffect(() => {
+  //   if (movies.length > 0) {
+  //     const interval = setInterval(() => {
+  //       setDisplayedMovies(prevMovies => {
+  //         const slicedMovies = prevMovies.slice(1).concat(prevMovies[0]);
+  //         return slicedMovies;
+  //       });
+  //     }, 5000);
+
+  //     return () => clearInterval(interval);
+  //   }
+  // }, [movies])
+
+
 
   return (
     <Box>
       {displayedMovies.length > 0 ? (
         <CarouselComponent showThumbs={false}>
-          {displayedMovies.slice(0,5).map((movie) => (
+          {displayedMovies.slice(2, 7).map((movie) => (
             <Box key={movie.id}>
               {movie.backdrop_path && (
                 <Image
@@ -54,31 +76,35 @@ const Carousel = () => {
                   src={`http://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
                   alt={movie.title}
                   width={500}
-                  height={400}
+                  height={600}
                   priority={true} // Set priority to true
                   loading='eager' // Set loading to eager
-                  
+                  style={{ opacity: "0.4" }}
                 />
               )}
-              <Typography
-                sx={{
-                  marginTop: '-100px',
-                  paddingBottom: '30px',
-                  color: 'white',
-                  fontWeight: 'bold',
-                  textTransform: 'uppercase',
-                  fontSize: { sm: '2rem', xs: '1rem', lg: '2.2rem' },
-                }}
-              >
-                {movie.title}
-              </Typography>
+              <Box position={"absolute"} bottom={"100px"} sx={{ bottom: { md: "100px", sm: "50px", xs: "30px" }, marginTop: '-100px', textAlign: "justify", width: { sm: "80%", xs: "100%" }, paddingLeft: { sm: "30px", xs: "10px" }, paddingRight: { sm: "0px", xs: "10px" } }}>
+                <Typography
+                  sx={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    textTransform: 'uppercase',
+                    fontSize: { sm: '1.5rem', xs: '1rem', lg: '2.2rem' },
+                  }}
+                >
+                  {movie.title}
+                </Typography>
+                <Typography sx={{ fontSize: { sm: '16px', xs: '14px', }, }}><span style={{ color: "#7FFF00" }}>{movie.vote_average}%</span> <span style={{ color: "#ffff" }}>{movie.release_date}</span></Typography>
+                <Typography component={"p"} variant='body2' sx={{ color: "#ffff", fontSize: { sm: '16px', xs: '12px', } }}>{movie.overview}</Typography>
+                <Stack spacing={2} direction="row" marginTop={"10px"} sx={{ fontSize: { sm: '16px', xs: '14px', } }}>
+                  <Button variant="contained" sx={{ color: "#000", fontWeight: "bold", backgroundColor: "white", ":hover": { backgroundColor: "#2F4F4F" }, padding: { xs: "5px 5px", }, fontSize: { xs: "12px" }, textAlign: "center" }}><PlayArrowIcon /> Play</Button>
+                  <Button variant="outlined" sx={{ color: "white", border: "1px solid gray", padding: { xs: "5px 5px", }, fontSize: { xs: "12px" } }}><InfoOutlinedIcon /> More info</Button>
+                </Stack>
+              </Box>
             </Box>
           ))}
         </CarouselComponent>
       ) : (
-        <Box sx={{ textAlign: 'center', height: '100px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <LinearIndeterminate />
-        </Box>
+        <Typography sx={{marginTop:"70px"}}><LinearIndeterminate/></Typography>
       )}
     </Box>
   );

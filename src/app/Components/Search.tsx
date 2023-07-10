@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 import TextField from '@mui/material/TextField';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 
 
@@ -40,8 +41,10 @@ export default function NestedModal() {
   };
 
   return (
-    <div>
-      <Button onClick={handleOpen}> <SearchIcon sx={{fontSize:"2rem",color:"white"}}/></Button>
+    <Box>
+      <Button onClick={handleOpen}> <SearchIcon sx={{fontSize:"2rem",color:"white",paddingRight:"0"}}/></Button>
+      <Button><NotificationsIcon sx={{fontSize:"2rem",color:"white"}}/></Button>
+      <Button sx={{backgroundColor:"brown",color:"white",textTransform:"capitalize"}}>Sign In</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -52,6 +55,6 @@ export default function NestedModal() {
        <BasicTextFields/>
         </Box>
       </Modal>
-    </div>
+    </Box>
   );
 }

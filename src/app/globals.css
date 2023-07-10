@@ -9,12 +9,12 @@
 }
 
 .home-Img {
-  transition: .5s;
-  border-radius: 10px;
+  transition: .3s;
+  padding: 0px 3px;
 }
 
 .home-Img:hover {
-  transform: scale(1.1, 1.1);
+  transform: scale(1.05);
 }
 
 .img-tvshow {
@@ -27,7 +27,12 @@
   transform:scale(1,1.04);
 }
 
-
+.model-body {
+  text-align: center;
+  width: 60%;
+  padding: 5px;
+ 
+}
 
 @media screen and (max-width:992px) {
   .tvshow-mod-img {

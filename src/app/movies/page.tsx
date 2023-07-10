@@ -1,5 +1,5 @@
 'use client'
-import { Daymovie } from '../Components/Daymovie';
+import { Daymovie } from '../Components/API/Daymovie';
 import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -45,7 +45,7 @@ export default function Page() {
     async function fetchDayMovies() {
       try {
         const tvShow = await Daymovie();
-        console.log(tvShow);
+        // console.log(tvShow);
         if (tvShow && tvShow.results) {
           setMovie(tvShow.results);
         }
@@ -67,15 +67,14 @@ export default function Page() {
   };
 
   const theme = createTheme(); // Create an empty theme object
-const Width ={
-width:"100%"
-}
+
   return (
     <ThemeProvider theme={theme}>
       <Box className="mt-80" sx={{ flexGrow: 1 }}>
         <Typography variant="h4" sx={{ color: 'red', padding: '10px 20px', textTransform: 'uppercase', textAlign: 'center', borderBottom: '2px solid gray', borderTop: '2px solid gray' }}>
           TV Shows
         </Typography>
+        {/* Modal start here=================================== */}
         {selectedTvShow && (
           <Modal
             open={open}
@@ -84,17 +83,17 @@ width:"100%"
           >
             <Box className="model-body" sx={{ ...style, display: "flex", }} >
               <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: "center", width: "100%" }}>
-           
-              <img
+
+                <img
                   className='tvshow-mod-img'
                   src={'http://image.tmdb.org/t/p/w500' + selectedTvShow.poster_path}
                   alt=''
-                  height="350"
+                  height="350px"
                   width="100%"
                   style={{ cursor: 'progress' }}
                   loading='eager' // Set loading to eager 
                 />
-            
+
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6} sx={{ textAlign: "justify", paddingLeft: "20px", fontWeight: "bold", width: "100%" }}>
                 <Typography sx={{ textAlign: "right" }}>
@@ -135,7 +134,7 @@ width:"100%"
                     width={300}
                     className='img-tvshow'
                     priority={true} // Set priority to true
-                    loading='eager' // Set loading to eager 
+
                   />
                 </Box>
               </Grid>
