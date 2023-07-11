@@ -67,7 +67,7 @@ const Carousel = () => {
   return (
     <Box>
       {displayedMovies.length > 0 ? (
-        <CarouselComponent showThumbs={false}>
+        <CarouselComponent >
           {displayedMovies.slice(2, 7).map((movie) => (
             <Box key={movie.id}>
               {movie.backdrop_path && (
