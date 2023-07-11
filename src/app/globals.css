@@ -9,12 +9,12 @@
 }
 
 .home-Img {
-  transition: .3s;
+  transition: .2s;
   padding: 0px 3px;
 }
 
 .home-Img:hover {
-  transform: scale(1.05);
+  transform: scale(1.07);
 }
 
 .img-tvshow {
@@ -32,6 +32,16 @@
   width: 60%;
   padding: 5px;
  
+}
+.scroll-btn:hover .scroll-button{
+background-color:#474242;
+opacity:0.5;
+color: black;
+}
+.scroll-btn:hover .scroll-icon{
+  color:white;
+  opacity: 1;
+  z-index:100;
 }
 
 @media screen and (max-width:992px) {

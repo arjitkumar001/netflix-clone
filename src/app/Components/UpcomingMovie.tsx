@@ -1,101 +1,40 @@
-// import React from 'react'
-// import '@/app/style/home.css'
-// import { Grid, Typography, Box } from '@mui/material'
-// import Image from 'next/image'
 import { useEffect, useState } from 'react';
-import Button from '@mui/material/Button';
-// import { FetchTMDBData } from './API/FetchTMDBData'
-
-
-// interface TMDBMovie {
-//   id: number;
-//   title: string
-//   poster_path: string
-//   release_date: string
-//   vote_average: number
-// }
-
-// const UpcomingMovie: React.FC = () => {
-//   const [movies, setMovies] = useState<TMDBMovie[]>([]);
-
-//   useEffect(() => {
-//     async function fetchUpcomingMovie() {
-//       try {
-//         const upcommingApi = await FetchTMDBData();
-//         // console.log(upcommingApi);
-//         if (upcommingApi && upcommingApi.results) {
-//           setMovies(upcommingApi.results);
-//         }
-//       } catch (error) {
-//         console.error('Error fetching data from TMDB:', error);
-//       }
-//     }
-//    fetchUpcomingMovie()
-//   }, []);
-
-//   return (
-//     <Box>
-//       <Typography variant='h4' sx={{ color: "gray", padding: "10px 20px", textTransform: "uppercase", textAlign: "justify" }}>Up Coming</Typography>
-//       <Grid className="scrollhide" sx={{ display: "flex", overflowX: "scroll", "&::-webkit-scrollbar": { display: "none" } }} >
-//         {
-//           movies.map((movie) => {
-//             return (
-              
-//               <Grid container key={movie.id} sx={{ cursor: "pointer", }}>
-              
-//                 <Grid sx={{ border: "none", color: "white", textAlign: "center", overflow: "hidden" }} >
-//                   <Image
-//                     className='home-Img'
-//                     src={"http://image.tmdb.org/t/p/w500" + movie.poster_path}
-//                     alt=""
-//                     height={300}
-//                     width={250}
-//                     priority={true} // Set priority to true
-//                     loading='eager' // Set loading to eager 
-//                   />
-//                 </Grid>
-             
-//               </Grid>
-//             )
-//           })
-//         }
-      
-//       </Grid>
-
-//     </Box>
-//   );
-// };
-
-// export default UpcomingMovie;
-
 import React, { useRef } from 'react';
 import { Grid, Typography, Box } from '@mui/material';
 import Image from 'next/image';
 import { FetchTMDBData } from './API/FetchTMDBData';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+import Modal from '@mui/material/Modal';
+import Container from '@mui/material/Container/Container'
 
 interface TMDBMovie {
   id: number;
   title: string;
   poster_path: string;
-  release_date: string;
   vote_average: number;
+  release_date:string;
+  original_language:string;
 }
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  width: "40%",
+  transform: 'translate(-50%, -50%)',
+  bgcolor: '#808080',
+  boxShadow: 24,
+  p: 2,
+};
 
 const UpcomingMovie: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const handleImageClick = (scrollOffset: number) => {
-    if (containerRef.current) {
-      containerRef.current.scrollTo({
-        left: containerRef.current.scrollLeft + scrollOffset,
-        behavior: 'smooth',
-      });
-    }
-  };
-
-  // Fetch and set movies using useEffect
-    const [movies, setMovies] = useState<TMDBMovie[]>([]);
-
+  const [movies, setMovies] = useState<TMDBMovie[]>([]);
+  const [open, setOpen] = useState(false);
+  const [selectedTvShow, setSelectedTvShow] = useState<TMDBMovie | null>(null);
   useEffect(() => {
     async function fetchUpcomingMovie() {
       try {
@@ -108,30 +47,110 @@ const UpcomingMovie: React.FC = () => {
         console.error('Error fetching data from TMDB:', error);
       }
     }
-   fetchUpcomingMovie()
+    fetchUpcomingMovie()
   }, []);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const handleScrollLeft = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        left: containerRef.current.scrollLeft - 300,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const handleScrollRight = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        left: containerRef.current.scrollLeft + 300,
+        behavior: 'smooth',
+      });
+    }
+  };
+  const handleOpen = (tvShow: TMDBMovie) => {
+    setSelectedTvShow(tvShow);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedTvShow(null);
+  };
+
+
 
   return (
     <Box>
-      <Typography variant='h4' sx={{ color: 'gray', padding: '10px 20px', textTransform: 'uppercase', textAlign: 'justify' }}>
+        <Container maxWidth="xl">
+        {/* Modal start here=================================== */}
+        {selectedTvShow && (
+          <Modal
+            open={open}
+            onClose={handleClose}
+
+          >
+            <Box className="model-body" sx={{ ...style, display: "flex", }} >
+              <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: "center", width: "100%" }}>
+
+                <img
+                  className='tvshow-mod-img'
+                  src={'http://image.tmdb.org/t/p/w500' + selectedTvShow.poster_path}
+                  alt=''
+                  height="350px"
+                  width="100%"
+                  style={{ cursor: 'progress' }}
+                  loading='eager' // Set loading to eager 
+                />
+
+              </Grid>
+              <Grid item xs={12} sm={12} md={6} lg={6} sx={{ textAlign: "justify", paddingLeft: "20px", fontWeight: "bold", width: "100%" }}>
+                <Typography sx={{ textAlign: "right" }}>
+                  <IconButton onClick={handleClose} >
+                    <CloseIcon sx={{ fontSize: '24px', fontWeight: '800', color: 'gray', backgroundColor: 'lightgray', borderRadius: '5px', ':hover': { color: 'darkgrey' } }} />
+                  </IconButton></Typography>
+                <Grid sx={{ display: "flex", flexDirection: "column", height: "300px", justifyContent: "center" }}>
+                  <Typography variant="h6" sx={{ fontWeight: "bold", fontSize: { xs: "14px", sm: "16px", md: "20px" } }}>
+                    <span>Title:</span>  {selectedTvShow.title}
+                  </Typography>
+                  <Typography sx={{ mt: 2, fontWeight: "bold",color:"#7FFF00" }}>
+                    <span style={{color:"black"}}>Release Date:</span> {selectedTvShow.release_date}
+                  </Typography>
+                  <Typography sx={{ mt: 2, fontWeight: "bold" }}>
+                    <span>Language:</span> {selectedTvShow.original_language}
+                  </Typography>
+                  <Typography sx={{ fontSize: '14px', color: 'orange', paddingTop: '10px', fontWeight: 'bold', borderRadius: '50%', paddingRight: '10px' }}>
+                    <span style={{ color: 'black' }}>Vote avg.: </span>{selectedTvShow.vote_average}
+                  </Typography>
+                  <Typography sx={{ display: "flex", alignItems: "center", marginTop: "20px", fontWeight: "bold", color: "black", backgroundColor: "gray", borderRadius: "50px", transition: ".3s", cursor: "pointer", mt: { lg: "30px", md: "20px", sm: "20px", xs: "20px" }, ":hover": { backgroundColor: "lightgray" },width:"50%" }}>
+                    <PlayCircleIcon sx={{ fontSize: "3rem", color: "brown" }} /> <span>Play Video</span><ArrowForwardIcon className='play-arrow' />
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Box>
+          </Modal>
+        )}
+      <Typography variant='h4' sx={{ color: 'gray', padding: '10px 20px', textTransform: 'uppercase', textAlign: 'justify',fontSize:{xs:"20px"} }}>
         Up Coming
       </Typography>
       <Grid
         ref={containerRef}
-        className='scrollhide'
-        sx={{ display: 'flex', overflowX: 'scroll', '&::-webkit-scrollbar': { display: 'none' },position:"relative" }}
+        className='scroll-btn'
+        sx={{ display: 'flex', overflowX: 'scroll', '&::-webkit-scrollbar': { display: 'none' }, position: "relative" }}
       >
+        <Grid className='scroll-button' onClick={() => handleScrollLeft()} sx={{ position: 'sticky', top: 0, left: 0, zIndex: 1, ":hover": { backgroundColor: "black", opacity: "0.3" },borderRadius:"none",display:"flex",justifyContent:"center",alignItems:"center",padding:"0px 10px" }}>
+          <ArrowBackIosIcon className='scroll-icon' sx={{ color: "black", fontSize: "2rem", zIndex: 2, }} />
+        </Grid>
         {movies.map((movie) => (
           <Grid
             key={movie.id}
-            container
             sx={{ cursor: 'pointer' }}
-             // Adjust the scrollOffset as needed
           >
             <Grid sx={{ border: 'none', color: 'white', textAlign: 'center', overflow: 'hidden' }}>
               <Image
+               onClick={() => handleOpen(movie)}
                 className='home-Img'
-                src={'http://image.tmdb.org/t/p/w500' + movie.poster_path}
+                src={'http://image.tmdb.org/t/p/w500' +movie.poster_path}
                 alt=''
                 height={300}
                 width={250}
@@ -141,9 +160,11 @@ const UpcomingMovie: React.FC = () => {
             </Grid>
           </Grid>
         ))}
-       
+        <Grid className='scroll-button' onClick={() => handleScrollRight()} sx={{ position: 'sticky', top: 0, right: 0, zIndex: 1, ":hover": { backgroundColor: "black", opacity: "0.3" },borderRadius:"none",display:"flex",justifyContent:"center",alignItems:"center",padding:"0px 10px"  }} >
+          <ArrowForwardIosIcon className='scroll-icon' sx={{ color: "black", fontSize: "2rem", zIndex: 2, }} />
+        </Grid>
       </Grid>
-      <Grid onClick={() => handleImageClick(300)} sx={{position:"fixed",right:"0px",top:"100px"}}><Button variant="contained">scroll</Button></Grid>
+      </Container>
     </Box>
   );
 };
