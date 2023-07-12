@@ -1,5 +1,14 @@
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
+// import { useEffect, useState } from 'react';
+// import Image from 'next/image';
+// import { Carousel as CarouselComponent } from 'react-responsive-carousel';
+// import 'react-responsive-carousel/lib/styles/carousel.min.css';
+// import { Typography, Box } from '@mui/material';
+// import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+// import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+// import Button from '@mui/material/Button';
+// import Stack from '@mui/material/Stack';
+// import LinearIndeterminate from "@/app/Components/ProgressBar/Progressbar"
+import React, { useEffect, useState } from 'react';
 import { Carousel as CarouselComponent } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Typography, Box } from '@mui/material';
@@ -7,8 +16,9 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import LinearIndeterminate from "@/app/Components/ProgressBar/Progressbar"
-
+import LinearIndeterminate from '@/app/Components/ProgressBar/Progressbar';
+import Image from 'next/image';
+// import { Carousel } from 'react-responsive-carousel';
 
 interface Movie {
   id: number;
@@ -49,6 +59,7 @@ const Carousel = () => {
       return () => clearInterval(interval);
     }
   }, [movies]);
+
   // useEffect(() => {
   //   if (movies.length > 0) {
   //     const interval = setInterval(() => {
@@ -67,7 +78,7 @@ const Carousel = () => {
   return (
     <Box>
       {displayedMovies.length > 0 ? (
-        <CarouselComponent >
+        <CarouselComponent  showThumbs={false}>
           {displayedMovies.slice(2, 7).map((movie) => (
             <Box key={movie.id}>
               {movie.backdrop_path && (
@@ -75,7 +86,7 @@ const Carousel = () => {
                   className='slider-img'
                   src={`http://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
                   alt={movie.title}
-                  width={500}
+                  width={1200}
                   height={600}
                   priority={true} // Set priority to true
                   loading='eager' // Set loading to eager
@@ -96,7 +107,7 @@ const Carousel = () => {
                 <Typography sx={{ fontSize: { sm: '16px', xs: '14px', }, }}><span style={{ color: "#7FFF00" }}>{movie.vote_average}%</span> <span style={{ color: "#ffff" }}>{movie.release_date}</span></Typography>
                 <Typography component={"p"} variant='body2' sx={{ color: "#ffff", fontSize: { sm: '16px', xs: '12px', } }}>{movie.overview}</Typography>
                 <Stack spacing={2} direction="row" marginTop={"10px"} sx={{ fontSize: { sm: '16px', xs: '14px', } }}>
-                  <Button variant="contained" sx={{ color: "#000", fontWeight: "bold", backgroundColor: "white", ":hover": { backgroundColor: "#2F4F4F" }, padding: { xs: "5px 5px", }, fontSize: { xs: "12px" }, textAlign: "center" }}><PlayArrowIcon /> Play</Button>
+                  <Button variant="contained" sx={{ color: "#000", fontWeight: "bold", backgroundColor: "white", ":hover": { backgroundColor: "#2F4F4F" }, padding: { xs: "5px 10px", }, fontSize: { xs: "12px" }, textAlign: "center" }}><PlayArrowIcon /> Play</Button>
                   <Button variant="outlined" sx={{ color: "white", border: "1px solid gray", padding: { xs: "5px 5px", }, fontSize: { xs: "12px" } }}><InfoOutlinedIcon /> More info</Button>
                 </Stack>
               </Box>

@@ -5,7 +5,7 @@ const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const apikey = "70832fbf4e20b8e11a44971719bde149";
 const endpoint = '/movie/now_playing';
 
-export async function RecentlymovieApi(): Promise<any> {
+export async function NowPlayingMovieApi(): Promise<any> {
   const url = `${TMDB_BASE_URL}${endpoint}?api_key=${apikey}`;
 
   try {

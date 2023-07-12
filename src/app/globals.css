@@ -3,7 +3,10 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+.logo{
+  height:50px;
+  width: 200px;
+}
 .mt-80 {
   margin-top: 70px;
 }
@@ -18,39 +21,56 @@
 }
 
 .img-tvshow {
-  width: 100%;
+  width: auto;
   padding: '5px 10px';
   cursor: 'pointer';
   transition: .5s;
 }
+
 .img-tvshow:hover {
-  transform:scale(1,1.04);
+  transform: scale(1, 1.04);
 }
 
 .model-body {
   text-align: center;
   width: 60%;
   padding: 5px;
- 
+
 }
-.scroll-btn:hover .scroll-button{
-background-color:#474242;
-opacity:0.5;
-color: black;
+
+.scroll-btn:hover .scroll-button {
+  background-color: #474242;
+  opacity: 0.5;
+  color: black;
 }
-.scroll-btn:hover .scroll-icon{
-  color:white;
+
+.scroll-btn:hover .scroll-icon {
+  color: white;
   opacity: 1;
-  z-index:100;
+  z-index: 100;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: gray;
+  font-size: 14px;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+  color: #3b3bf3;
 }
 
 @media screen and (max-width:992px) {
   .tvshow-mod-img {
-    width: 100%;
-    height: 300px;
+    width: auto;
+    height: auto;
     padding: 5px;
   }
-
+  .logo{
+    height: 40px;
+    width: 150px;
+  }
   .model-body {
     text-align: center;
     width: 60%;
@@ -58,18 +78,20 @@ color: black;
   }
 
   .slider-img {
-    height: 350px;
+    height: auto;
   }
-  .footer-img{
-    height: 150px;
-    width: 200px;
-   }
+
 }
+
 @media screen and (max-width:768px) {
   .tvshow-mod-img {
-    width: 100%;
-    height: 300px;
+    width: auto;
+    height: auto;
     padding: 5px;
+  }
+  .logo{
+    height: 40px;
+    width: 150px;
   }
 
   .model-body {
@@ -77,19 +99,23 @@ color: black;
     width: 80%;
     padding: 5px;
   }
-  .footer-img{
-    height: 150px;
-    width: 200px;
-   }
+
+  .footer-img {
+    height: auto;
+    width: auto;
+  }
 }
 
 @media screen and (max-width:600px) {
   .tvshow-mod-img {
-    width: 100%;
-    height: 300px;
+    width: auto;
+    height: auto;
     padding: 5px;
   }
-
+  .logo{
+    height: 40px;
+    width: 150px;
+  }
   .model-body {
     text-align: center;
     width: 95%;
@@ -97,38 +123,37 @@ color: black;
   }
 
   .slider-img {
-    height: 300px;
+    height: auto;
   }
+
   .img-tvshow {
-   height: 300px;
+    height: auto;
   }
-  .footer-img{
-    height: 150px;
-    width: 200px;
-   }
 }
 
 @media screen and (max-width:400px) {
   .tvshow-mod-img {
-    max-width: 100%;
-    height: 300px;
+    width: auto;
+    height: auto;
   }
-
+  .logo{
+    height: 40px;
+    width: 150px;
+  }
   .model-body {
     text-align: center;
     width: 98%;
   }
 
   .slider-img {
-    height: 300px;
+    height: auto;
   }
+
   .img-tvshow {
-    height: 300px;
-   }
-   .footer-img{
-    height: 150px;
-    width: 200px;
-   }
+    height: auto;
+  }
+
+  
 }
 
 .play-arrow {

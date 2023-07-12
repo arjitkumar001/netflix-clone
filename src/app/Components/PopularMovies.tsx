@@ -148,8 +148,8 @@ const PopularmoviePage: React.FC = () => {
                     className='home-Img'
                     src={"http://image.tmdb.org/t/p/w500" + movie.poster_path}
                     alt=""
-                    height={300}
-                    width={250}
+                    height={200}
+                    width={300}
                     priority={true} // Set priority to true
                     loading='eager' // Set loading to eager 
                   />

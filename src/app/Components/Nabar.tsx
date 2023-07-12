@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid'
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
@@ -11,6 +12,10 @@ import MenuItem from '@mui/material/MenuItem';
 import NestedModal from './Search';
 import Link from 'next/link';
 import Container from '@mui/material/Container/Container'
+import Image from 'next/image';
+import logo from '../../../public/netflix-logo.png'
+import dynamic from "next/dynamic";
+
 
 const pages = ['Home', 'TV Shows', 'Movies', 'Recently Added'];
 const pageLink = ['/', '/tvshow', '/movies', '/recentlyadd'];
@@ -35,7 +40,7 @@ function NavBar() {
             const threshold = 100;
 
             if (scrollPosition > threshold) {
-                setScrollColor('#0a182d');
+                setScrollColor('#171717');
             } else {
                 setScrollColor('transparent');
             }
@@ -52,24 +57,8 @@ function NavBar() {
         <AppBar position="fixed" sx={{ backgroundColor: scrollColor, boxShadow: "none", height: "70px" }}>
             <Container maxWidth="xl">
                 <Toolbar >
-                    <Typography
-                        variant="h3"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: { sm: '.3rem', xs: "0rem" },
-                            color: 'red',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        NETFLIX
-                    </Typography>
-
+                    {/* logo */}
+              
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -102,39 +91,25 @@ function NavBar() {
                         >
                             {pages.map((page, index) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu} sx={{ padding: { xs: "10px 100px" }, textTransform: "uppercase", fontWeight: "800" }}>
-                                    <Typography textAlign="center"><Link href={pageLink[index]} style={{ textDecoration: "none", fontWeight: "bold" }}>{page}</Link></Typography>
+                                    <Typography variant='body2' textAlign="center"><Link href={pageLink[index]} style={{ textDecoration: "none", fontWeight: "bold" }}>{page}</Link></Typography>
                                 </MenuItem>
                             ))}
 
                         </Menu>
                     </Box>
-                    <Typography
-                        variant="h4"
-                        noWrap
-                        component="a"
-                        href=""
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'red',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        NETFLIX
-                    </Typography>
+                    <Grid>
+                        {/* logo */}
+                        <Image src={logo} alt="" height={40} width={200} className='logo' priority={true}/>
+                    </Grid>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page, index) => (
                             <Link href={pageLink[index]} key={page} passHref style={{ textDecoration: "none" }}>
                                 <Button
                                     onClick={handleCloseNavMenu}
                                     sx={{ my: 2, color: 'white', display: 'block' }}
-                                    component="a"
+                                  
                                 >
-                                    {page}
+                                 {page}
                                 </Button>
                             </Link>
                         ))}
@@ -148,6 +123,7 @@ function NavBar() {
         </AppBar>
     );
 }
-export default NavBar;
+// export default NavBar;
+export default dynamic (() => Promise.resolve(NavBar), {ssr: false})
 
 
