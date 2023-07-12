@@ -157,8 +157,8 @@ export default function TrendingTv() {
             className='home-Img'
             src={'http://image.tmdb.org/t/p/w500' +tv.poster_path}
             alt=''
-            height={300}
-            width={250}
+            height={200}
+            width={300}
             priority={true}
             loading='eager'
           />

@@ -1,55 +1,63 @@
-import { useEffect, useState } from 'react';
-import React, { useRef } from 'react';
-import { Grid, Typography, Box } from '@mui/material';
+
+import * as React from 'react';
+import { useState, useEffect, useRef } from 'react';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
 import Image from 'next/image';
-import { FetchTMDBData } from './API/FetchTMDBData';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import Grid from '@mui/material/Grid';
+import '@/app/style/home.css';
+import { RecentlymovieApi } from '../Components/API/RecentlymovieApi';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-import Modal from '@mui/material/Modal';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Container from '@mui/material/Container/Container'
 
-interface TMDBMovie {
-  id: number;
-  title: string;
+
+interface movieData {
+  id: string;
   poster_path: string;
-  vote_average: number;
+  title: string;
+  media_type: string;
   release_date: string;
-  original_language: string;
+  original_language:string
+  vote_count:number
 }
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
   width: "40%",
   transform: 'translate(-50%, -50%)',
-  bgcolor: '#808080',
+  bgcolor: 'background.paper',
   boxShadow: 24,
   p: 2,
 };
 
-const UpcomingMovie: React.FC = () => {
-  const [movies, setMovies] = useState<TMDBMovie[]>([]);
+export default function NewAndRecentlyMovie() {
+  const [movie, setMovie] = useState<movieData[]>([])
   const [open, setOpen] = useState(false);
-  const [selectedTvShow, setSelectedTvShow] = useState<TMDBMovie | null>(null);
+  const [selectedTvShow, setSelectedTvShow] = useState<movieData | null>(null);
+  
+
   useEffect(() => {
-    async function fetchUpcomingMovie() {
+    async function fetchRecentlymovieApi() {
       try {
-        const upcommingApi = await FetchTMDBData();
-        // console.log(upcommingApi);
-        if (upcommingApi && upcommingApi.results) {
-          setMovies(upcommingApi.results);
+        const playmovie = await RecentlymovieApi();
+        // console.log(playmovie);
+        if (playmovie && playmovie.results) {
+          setMovie(playmovie.results);
         }
       } catch (error) {
         console.error('Error fetching data from TMDB:', error);
       }
     }
-    fetchUpcomingMovie()
+    fetchRecentlymovieApi();
   }, []);
-
   const containerRef = useRef<HTMLDivElement>(null);
   const handleScrollLeft = () => {
     if (containerRef.current) {
@@ -68,7 +76,8 @@ const UpcomingMovie: React.FC = () => {
       });
     }
   };
-  const handleOpen = (tvShow: TMDBMovie) => {
+
+  const handleOpen = (tvShow: movieData) => {
     setSelectedTvShow(tvShow);
     setOpen(true);
   };
@@ -78,10 +87,8 @@ const UpcomingMovie: React.FC = () => {
     setSelectedTvShow(null);
   };
 
-
-
   return (
-    <Box>
+    <Box sx={{ }}>
       <Container maxWidth="xl">
         {/* Modal start here=================================== */}
         {selectedTvShow && (
@@ -90,7 +97,7 @@ const UpcomingMovie: React.FC = () => {
             onClose={handleClose}
 
           >
-            <Box className="model-body" sx={{ ...style, display: "flex" }} >
+            <Box className="model-body" sx={{ ...style, display: "flex", }} >
               <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: "center", width: "100%" }}>
 
                 <img
@@ -109,30 +116,21 @@ const UpcomingMovie: React.FC = () => {
                   <IconButton onClick={handleClose} >
                     <CloseIcon sx={{ fontSize: '24px', fontWeight: '800', color: 'gray', backgroundColor: 'lightgray', borderRadius: '5px', ':hover': { color: 'darkgrey' } }} />
                   </IconButton></Typography>
-                <Grid sx={{ height: "300px", }}>
-                  <Typography variant="subtitle2" display="inline" sx={{fontSize: { xs: "14px", sm: "16px", md: "20px" },fontWeight:"bold"}}>
-                    Title:
+                <Grid sx={{ display: "flex", flexDirection: "column", height: "300px", justifyContent: "center" }}>
+                  <Typography variant="h6" sx={{ fontWeight: "bold", fontSize: { xs: "14px", sm: "16px", md: "20px" } }}>
+                    <span>Title:</span>  {selectedTvShow.title}
                   </Typography>
-                  <Typography variant="subtitle1" display="inline" sx={{ fontWeight: "bold", fontSize: { xs: "14px", sm: "16px", md: "20px" } }}>
-                    {selectedTvShow.title}
+                  <Typography sx={{ mt: 2, fontWeight: "bold", color: "#7FFF00" }}>
+                    <span style={{ color: "black" }}>Release Date:</span> {selectedTvShow.release_date}
                   </Typography>
-                  <Typography variant="subtitle2" display="inline" sx={{fontSize: { xs: "14px", sm: "16px", md: "20px" },fontWeight:"bold"}}>
-                    Release Date:
+                  <Typography sx={{ mt: 2, fontWeight: "bold" }}>
+                    <span>Media Type:</span> {selectedTvShow.media_type}
                   </Typography>
-                  <Typography variant="subtitle1" display="inline" sx={{ mt: 2, fontWeight: "bold", color: "#7FFF00" }}>
-                   {selectedTvShow.release_date}
+                  <Typography sx={{ mt: 2, fontWeight: "bold" }}>
+                    <span>Language:</span> {selectedTvShow.original_language}
                   </Typography>
-                  <Typography variant="subtitle2" display="inline" sx={{fontSize: { xs: "14px", sm: "16px", md: "20px" },fontWeight:"bold"}}>
-                    Language:
-                  </Typography>
-                  <Typography variant="subtitle1" display="inline" sx={{ mt: 2, fontWeight: "bold" }}>
-                    {selectedTvShow.original_language}
-                  </Typography>
-                  <Typography variant="subtitle2" display="inline" sx={{fontSize: { xs: "14px", sm: "16px", md: "20px" },fontWeight:"bold"}}>
-                    Vote:
-                  </Typography>
-                  <Typography variant="subtitle1" display="inline" sx={{ fontSize: '14px', color: 'orange', paddingTop: '10px', fontWeight: 'bold', borderRadius: '50%', paddingRight: '10px' }}>
-                    {selectedTvShow.vote_average}
+                  <Typography sx={{ fontSize: '14px', color: 'orange', paddingTop: '10px', fontWeight: 'bold', borderRadius: '50%', paddingRight: '10px' }}>
+                    <span style={{ color: 'black' }}>Vote avg.: </span>{selectedTvShow.vote_count}
                   </Typography>
                   <Typography sx={{ display: "flex", alignItems: "center", marginTop: "20px", fontWeight: "bold", color: "black", backgroundColor: "gray", borderRadius: "50px", transition: ".3s", cursor: "pointer", mt: { lg: "30px", md: "20px", sm: "20px", xs: "20px" }, ":hover": { backgroundColor: "lightgray" }, width: "50%" }}>
                     <PlayCircleIcon sx={{ fontSize: "3rem", color: "brown" }} /> <span>Play Video</span><ArrowForwardIcon className='play-arrow' />
@@ -143,7 +141,7 @@ const UpcomingMovie: React.FC = () => {
           </Modal>
         )}
         <Typography variant='h4' sx={{ color: 'gray', padding: '10px 20px', textTransform: 'uppercase', textAlign: 'justify', fontSize: { xs: "20px" } }}>
-          Up Coming
+          New & Recently Add
         </Typography>
         <Grid
           ref={containerRef}
@@ -153,16 +151,16 @@ const UpcomingMovie: React.FC = () => {
           <Grid className='scroll-button' onClick={() => handleScrollLeft()} sx={{ position: 'sticky', top: 0, left: 0, zIndex: 1, ":hover": { backgroundColor: "black", opacity: "0.3" }, borderRadius: "none", display: "flex", justifyContent: "center", alignItems: "center", padding: "0px 10px" }}>
             <ArrowBackIosIcon className='scroll-icon' sx={{ color: "black", fontSize: "2rem", zIndex: 2, }} />
           </Grid>
-          {movies.map((movie) => (
+          {movie.map((tv) => (
             <Grid
-              key={movie.id}
+              key={tv.id}
               sx={{ cursor: 'pointer' }}
             >
               <Grid sx={{ border: 'none', color: 'white', textAlign: 'center', overflow: 'hidden' }}>
                 <Image
-                  onClick={() => handleOpen(movie)}
+                  onClick={() => handleOpen(tv)}
                   className='home-Img'
-                  src={'http://image.tmdb.org/t/p/w500' + movie.poster_path}
+                  src={'http://image.tmdb.org/t/p/w500' + tv.poster_path}
                   alt=''
                   height={200}
                   width={300}
@@ -177,14 +175,6 @@ const UpcomingMovie: React.FC = () => {
           </Grid>
         </Grid>
       </Container>
-      <Typography variant="subtitle1" display="inline">
-        subtitle1 display inline{" "}
-      </Typography>
-      <Typography variant="subtitle2" display="inline">
-        subtitle2 display inline{" "}
-      </Typography>
     </Box>
   );
-};
-
-export default UpcomingMovie;
+}
