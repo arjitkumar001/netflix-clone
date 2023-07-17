@@ -25,10 +25,10 @@ export default function RowAndColumnSpacing() {
           <Grid item xs={6} sm={3} md={3} lg={3} >
             <Item sx={{ color: "gray", height: "250px", backgroundColor: "transparent", cursor: "pointer" }}>
               <Typography sx={{ textAlign: "right" }}>
-                <FacebookIcon style={{ fontSize: "2rem", color: "gray", marginRight: "20px" }} />
-                <InstagramIcon style={{ fontSize: "2rem", color: "gray", marginRight: "20px" }} />
-                <TwitterIcon style={{ fontSize: "2rem", color: "gray", marginRight: "20px" }} />
-                <YouTubeIcon style={{ fontSize: "2rem", color: "gray", marginRight: "20px" }} />
+                <FacebookIcon sx={{ fontSize: "1.8rem", color: "white", marginRight: "20px", ":hover": { color: "red" } }} />
+                <InstagramIcon sx={{ fontSize: "1.8rem", color: "white", marginRight: "20px", ":hover": { color: "red" } }} />
+                <TwitterIcon sx={{ fontSize: "1.8rem", color: "white", marginRight: "20px", ":hover": { color: "red" } }} />
+                <YouTubeIcon sx={{ fontSize: "1.8rem", color: "white", marginRight: "20px", ":hover": { color: "red" } }} />
               </Typography>
               <Typography>
                 <Link href="#" className='footer-link'>Audio Description</Link>
@@ -39,14 +39,19 @@ export default function RowAndColumnSpacing() {
               <Typography>
                 <Link href="#" className='footer-link'>Legal Notices</Link>
               </Typography>
-
+              <br />
+              <Typography variant='subtitle1' display={"inline"} sx={{ border: "1px solid gray", padding: "10px", ":hover": { borderColor: "skyblue", background: "#ADD8E6", opacity: ".3", color: "black" } }}>
+                Service Code
+              </Typography>
+              <br />
+              <br />
               <Typography variant='body1'>
                 @ 2023-2023 Netflix.
               </Typography>
             </Item>
           </Grid>
           <Grid item xs={6} sm={3} md={3} lg={3} >
-            <Item sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "250px", backgroundColor: "transparent" }}>
+            <Item sx={{ display: "flex", flexDirection: "column", justifyContent: "center", height: "250px", backgroundColor: "transparent",textAlign:"justify" }}>
               <Typography>
                 <Link href="#" className='footer-link'>Help Center</Link>
               </Typography>
@@ -59,7 +64,7 @@ export default function RowAndColumnSpacing() {
             </Item>
           </Grid>
           <Grid item xs={6} sm={3} md={3} lg={3} >
-            <Item sx={{ height: "250px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "transparent" }}>
+            <Item sx={{ height: "250px", display: "flex", flexDirection: "column", justifyContent: "center",textAlign:"justify", backgroundColor: "transparent" }}>
               <Typography>
                 <Link href="#" className='footer-link'>Gift Card</Link>
               </Typography>
@@ -72,7 +77,7 @@ export default function RowAndColumnSpacing() {
             </Item>
           </Grid>
           <Grid item xs={6} sm={3} md={3} lg={3} >
-            <Item sx={{ height: "250px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "transparent" }}>
+            <Item sx={{ height: "250px", display: "flex", flexDirection: "column", justifyContent: "center", textAlign:"justify", backgroundColor: "transparent" }}>
               <Typography>
                 <Link href="#" className='footer-link'>Media Center</Link>
               </Typography>
@@ -82,7 +87,7 @@ export default function RowAndColumnSpacing() {
               <Typography>
                 <Link href="#" className='footer-link'>Contact Us</Link>
               </Typography>
-             
+
             </Item>
           </Grid>
         </Grid>

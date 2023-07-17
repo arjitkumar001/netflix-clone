@@ -116,7 +116,7 @@ export default function TrendingTv() {
                   className='tvshow-mod-img'
                   src={'http://image.tmdb.org/t/p/w500' + selectedTvShow.poster_path}
                   alt=''
-                  height="400px"
+                  height="500px"
                   width="100%"
                   style={{}}
                   loading='eager' // Set loading to eager 
@@ -164,15 +164,14 @@ export default function TrendingTv() {
                             key={tv.id}
                             sx={{ cursor: 'pointer' }}
                         >
-                            <Grid sx={{ border: 'none', color: 'white', textAlign: 'center', overflow: 'hidden',height:"200px"  }}>
-                                <Image
+                            <Grid sx={{ width: "250px", height: "350px", columnGap: "10px", textAlign: "center", padding: "0px 2px", overflow: "hidden" }}>
+                                <img
                                     onClick={() => handleOpen(tv)}
                                     className='home-Img'
                                     src={'http://image.tmdb.org/t/p/w500' + tv.poster_path}
                                     alt=''
-                                    height={200}
-                                    width={300}
-                                    priority={true}
+                                    height="500px"
+                                    width="100%"
                                     loading='eager'
                                 />
                             </Grid>

@@ -11,7 +11,7 @@ import UpcomingMovie from './Components/UpcomingMovie'
 const page: React.FC = () => {
   return (
     <Box>
-      <Carousel />
+      <Carousel/>
       <UpcomingMovie />
       <TopRatedMovie/>
       <PopularmoviePage />

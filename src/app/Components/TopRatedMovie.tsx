@@ -114,7 +114,7 @@ const TopRatedMovie: React.FC = () => {
                   className='tvshow-mod-img'
                   src={'http://image.tmdb.org/t/p/w500' + selectedTvShow.poster_path}
                   alt=''
-                  height="400px"
+                  height="500px"
                   width="100%"
                   style={{}}
                   loading='eager' // Set loading to eager 
@@ -159,15 +159,14 @@ const TopRatedMovie: React.FC = () => {
           movies.map((movie) => {
             return (
               <Grid container key={movie.id} sx={{ cursor: "pointer", }}>
-                <Grid sx={{ border: "none", color: "white", textAlign: "center", overflow: "hidden",height:"200px"  }} >
-                  <Image
+               <Grid sx={{ width: "250px", height: "350px", columnGap: "10px", textAlign: "center", padding: "0px 2px", overflow: "hidden" }}>
+                  <img
                     onClick={() => handleOpen(movie)}
                     className='home-Img'
                     src={"http://image.tmdb.org/t/p/w500" + movie.poster_path}
                     alt=""
-                    height={200}
-                    width={300}
-                    priority={true} // Set priority to true
+                    height="auto"
+                    width="100%"
                     loading='eager' // Set loading to eager 
                   />
                 </Grid>

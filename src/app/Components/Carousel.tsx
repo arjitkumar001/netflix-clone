@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Carousel as CarouselComponent } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Typography, Box } from '@mui/material';
+import { Typography, Box,Grid } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import LinearIndeterminate from '@/app/Components/ProgressBar/Progressbar';
-import Image from 'next/image';
+
 
 
 interface Movie {
@@ -44,9 +44,6 @@ const Carousel = () => {
     setDisplayedMovies(movies);
   }, [movies]);
 
- 
-
-
 
   return (
     <Box>
@@ -55,16 +52,18 @@ const Carousel = () => {
           {displayedMovies.slice(10, 15).map((movie) => (
             <Box key={movie.id}>
               {movie.backdrop_path && (
-                <Image
+                
+              <Grid sx={{width:"100%",height:"100%",inset:"0",zIndex:"10"}}>
+                  <img
                   className='slider-img'
                   src={`http://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-                  alt={movie.title}
-                  width={1200}
-                  height={600}
-                  priority={true} // Set priority to true
+                  alt={movie.title +"image"}
+                  width="100%"
+                  height="100%"
                   loading='eager' // Set loading to eager
-                  style={{ opacity: "0.2" }}
+                  style={{ }}
                 />
+              </Grid>
               )}
               <Box position={"absolute"} sx={{ bottom: { md: "70px", sm: "50px", xs: "30px" }, marginTop: '-100px', textAlign: "justify", width: { sm: "80%", xs: "100%" }, paddingLeft: { sm: "30px", xs: "10px" }, paddingRight: { sm: "0px", xs: "10px" } }}>
                 <Typography
