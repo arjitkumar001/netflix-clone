@@ -8,11 +8,11 @@ import DayByDayMovie from '../Components/DayByDayMovie'
 const page = () => {
   return (
     <>
-    <NowPlaingMovie />
-      <NewAndRecentlyMovie />
+      <NowPlaingMovie />
       <PopularmoviePage />
       <TopRatedMovie />
       <DayByDayMovie />
+      <NewAndRecentlyMovie />
     </>
   )
 }

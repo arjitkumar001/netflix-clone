@@ -1,24 +1,14 @@
-// import { useEffect, useState } from 'react';
-// import Image from 'next/image';
-// import { Carousel as CarouselComponent } from 'react-responsive-carousel';
-// import 'react-responsive-carousel/lib/styles/carousel.min.css';
-// import { Typography, Box } from '@mui/material';
-// import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-// import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-// import Button from '@mui/material/Button';
-// import Stack from '@mui/material/Stack';
-// import LinearIndeterminate from "@/app/Components/ProgressBar/Progressbar"
 import React, { useEffect, useState } from 'react';
 import { Carousel as CarouselComponent } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Typography, Box } from '@mui/material';
+import { Typography, Box,Grid } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import LinearIndeterminate from '@/app/Components/ProgressBar/Progressbar';
-import Image from 'next/image';
-// import { Carousel } from 'react-responsive-carousel';
+
+
 
 interface Movie {
   id: number;
@@ -49,51 +39,33 @@ const Carousel = () => {
     fetchMovies();
   }, []);
 
+ 
   useEffect(() => {
-    if (movies.length > 0) {
-      const interval = setInterval(() => {
-        const slicedMovies = movies.slice(1).concat(movies[0]);
-        setDisplayedMovies(slicedMovies);
-      }, 3000);
-
-      return () => clearInterval(interval);
-    }
+    setDisplayedMovies(movies);
   }, [movies]);
-
-  // useEffect(() => {
-  //   if (movies.length > 0) {
-  //     const interval = setInterval(() => {
-  //       setDisplayedMovies(prevMovies => {
-  //         const slicedMovies = prevMovies.slice(1).concat(prevMovies[0]);
-  //         return slicedMovies;
-  //       });
-  //     }, 5000);
-
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [movies])
-
 
 
   return (
     <Box>
       {displayedMovies.length > 0 ? (
         <CarouselComponent  showThumbs={false}>
-          {displayedMovies.slice(2, 7).map((movie) => (
+          {displayedMovies.slice(10, 15).map((movie) => (
             <Box key={movie.id}>
               {movie.backdrop_path && (
-                <Image
+                
+              <Grid sx={{width:"100%",height:"100%",inset:"0",zIndex:"10"}}>
+                  <img
                   className='slider-img'
                   src={`http://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-                  alt={movie.title}
-                  width={1200}
-                  height={600}
-                  priority={true} // Set priority to true
+                  alt={movie.title +"image"}
+                  width="100%"
+                  height="100%"
                   loading='eager' // Set loading to eager
-                  style={{ opacity: "0.4" }}
+                  style={{ }}
                 />
+              </Grid>
               )}
-              <Box position={"absolute"} bottom={"100px"} sx={{ bottom: { md: "100px", sm: "50px", xs: "30px" }, marginTop: '-100px', textAlign: "justify", width: { sm: "80%", xs: "100%" }, paddingLeft: { sm: "30px", xs: "10px" }, paddingRight: { sm: "0px", xs: "10px" } }}>
+              <Box position={"absolute"} sx={{ bottom: { md: "70px", sm: "50px", xs: "30px" }, marginTop: '-100px', textAlign: "justify", width: { sm: "80%", xs: "100%" }, paddingLeft: { sm: "30px", xs: "10px" }, paddingRight: { sm: "0px", xs: "10px" } }}>
                 <Typography
                   sx={{
                     color: 'white',
