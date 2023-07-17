@@ -41,7 +41,7 @@ export default function RowAndColumnSpacing() {
               </Typography>
 
               <Typography variant='body1'>
-                @ 2023-2023 Netflx.
+                @ 2023-2023 Netflix.
               </Typography>
             </Item>
           </Grid>

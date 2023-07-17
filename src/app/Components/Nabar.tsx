@@ -57,8 +57,20 @@ function NavBar() {
         <AppBar position="fixed" sx={{ backgroundColor: scrollColor, boxShadow: "none", height: "70px" }}>
             <Container maxWidth="xl">
                 <Toolbar >
-                    {/* logo */}
-              
+                <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+            }}
+          >
+             {/* logo */}
+             <Image src={logo} alt="" height={40} width={200} className='logo' priority={true}/>
+          </Typography>
+                   
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -97,10 +109,24 @@ function NavBar() {
 
                         </Menu>
                     </Box>
-                    <Grid>
+                    <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href=""
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+            
+            }}
+          >
+          {/* logo */}
+          <Image src={logo} alt="" height={40} width={200} className='logo' priority={true} />
+          </Typography>
                         {/* logo */}
-                        <Image src={logo} alt="" height={40} width={200} className='logo' priority={true}/>
-                    </Grid>
+                        <Image src={logo} alt="" height={40} width={200} className='logo' priority={true} style={{display:"none"}}/>
+                   
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page, index) => (
                             <Link href={pageLink[index]} key={page} passHref style={{ textDecoration: "none" }}>
