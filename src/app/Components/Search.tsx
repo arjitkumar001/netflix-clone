@@ -44,9 +44,9 @@ export default function NestedModal() {
   return (
     <Box  sx={{display:"flex",padding:"0px"}}>
    <Grid sx={{display:"flex",justifyContent:"center,",alignItems:"center",rowGapgap:"10px",columnGap:"20px"}}>
-      <SearchIcon onClick={handleOpen} sx={{ fontSize: {xs:"1.5rem",sm:"2rem"}, color: "white" }} />
-      <NotificationsIcon sx={{ fontSize: "2rem", color: "white",display: { xs: 'none', md: 'flex' } }} />
-      <Button sx={{ backgroundColor: "brown", color: "white", textTransform: "capitalize" }}>Sign In</Button>
+      <SearchIcon onClick={handleOpen} sx={{ fontSize: {xs:"1.5rem",sm:"2rem"}, color: "white" }} titleAccess='search'/>
+      <NotificationsIcon sx={{ fontSize: "2rem", color: "white",display: { xs: 'none', md: 'flex' } }} titleAccess='Notification' />
+      <Button sx={{ backgroundColor: "red", color: "white", textTransform: "capitalize" ,padding:"5px 0px",":hover":{background:"brown"}}}>Sign In</Button>
       </Grid>
 
       <Modal

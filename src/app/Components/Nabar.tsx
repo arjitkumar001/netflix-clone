@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid'
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
@@ -46,34 +45,30 @@ function NavBar() {
                 setScrollColor('transparent');
             }
         };
-
-
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
-   
-      
 
     return (
-        <AppBar position="fixed" sx={{ backgroundColor: {lg:scrollColor,md:scrollColor,sm:'#171717',xs:'#171717'}, boxShadow: "none", height: "70px" }}>
+        <AppBar position="fixed" sx={{ backgroundColor: { lg: scrollColor, md: scrollColor, sm: '#171717', xs: '#171717' }, boxShadow: "none", height: "70px" }}>
             <Container maxWidth="xl">
                 <Toolbar >
-                <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-            }}
-          >
-             {/* logo */}
-             <Image src={logo} alt="" height={30} width={150} className='logo' priority={true}/>
-          </Typography>
-                   
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="a"
+                        href="/"
+                        sx={{
+                            mr: 2,
+                            display: { xs: 'none', md: 'flex' },
+                        }}
+                    >
+                        {/* logo */}
+                        <Image src={logo} alt="" height={30} width={150} className='logo' priority={true} />
+                    </Typography>
+
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -85,7 +80,6 @@ function NavBar() {
                         >
                             <MenuIcon sx={{ fontSize: "2.5rem" }} />
                         </IconButton>
-
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
@@ -113,31 +107,27 @@ function NavBar() {
                         </Menu>
                     </Box>
                     <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-            }}
-          >
-          {/* logo */}
-          <Image src={logo} alt="" height={30} width={150} className='logo' priority={true} />
-          </Typography>
+                        variant="h5"
+                        noWrap
+                        component="a"
+                        href=""
+                        sx={{
+                            mr: 2,
+                            display: { xs: 'flex', md: 'none' },
+                            flexGrow: 1,
+                        }}
+                    >
                         {/* logo */}
-                        <Image src={logo} alt="" height={40} width={200} className='logo' priority={true} style={{display:"none"}}/>
-                   
+                        <Image src={logo} alt="" height={30} width={150} className='logo' priority={true} />
+                    </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page, index) => (
                             <Link href={pageLink[index]} key={page} passHref style={{ textDecoration: "none" }}>
                                 <Button
                                     onClick={handleCloseNavMenu}
                                     sx={{ my: 2, color: 'white', display: 'block' }}
-                                  
                                 >
-                                 {page}
+                                    {page}
                                 </Button>
                             </Link>
                         ))}
@@ -152,6 +142,6 @@ function NavBar() {
     );
 }
 // export default NavBar;
-export default dynamic (() => Promise.resolve(NavBar), {ssr: false})
+export default dynamic(() => Promise.resolve(NavBar), { ssr: false })
 
 

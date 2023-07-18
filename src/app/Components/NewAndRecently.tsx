@@ -4,12 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
-import Image from 'next/image';
 import Grid from '@mui/material/Grid';
 import '@/app/style/home.css';
 import { RecentlymovieApi } from '../Components/API/RecentlymovieApi';
-import PlayCircleIcon from '@mui/icons-material/PlayCircle';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -18,6 +15,9 @@ import Container from '@mui/material/Container/Container'
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import VolumeOffOutlinedIcon from '@mui/icons-material/VolumeOffOutlined';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import WatchLaterIcon from '@mui/icons-material/WatchLater';
+import ShareIcon from '@mui/icons-material/Share';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 
 interface movieData {
   id: string;
@@ -25,25 +25,33 @@ interface movieData {
   title: string;
   media_type: string;
   release_date: string;
-  original_language:string
-  vote_count:number
-  overview:string
+  original_language: string
+  vote_average: number
+  overview: string
 }
 
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
-  width: "40%",
+  width: "50%",
   transform: 'translate(-50%, -50%)',
   bgcolor: '#171717',
+};
+const youtube = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  fontSize: "100px",
+  fill: "red"
 };
 
 export default function NewAndRecentlyMovie() {
   const [movie, setMovie] = useState<movieData[]>([])
   const [open, setOpen] = useState(false);
   const [selectedTvShow, setSelectedTvShow] = useState<movieData | null>(null);
-  
+
 
   useEffect(() => {
     async function fetchRecentlymovieApi() {
@@ -89,32 +97,37 @@ export default function NewAndRecentlyMovie() {
   };
 
   return (
-    <Box sx={{ }}>
+    <Box sx={{}}>
       <Container maxWidth="xl">
         {/* Modal start here=================================== */}
         {selectedTvShow && (
           <Modal
             open={open}
             onClose={handleClose}
-
+            sx={{ backgroundColor: "rgba(23, 23, 23,0.8)", }}
           >
             <Box className="model-body" sx={{ ...style, display: "flex", flexDirection: "column", }} >
-              <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: "center", width: "100%" ,position:"relative",cursor:"pointer"}}>
-                <Typography sx={{ position: "absolute", right: "10px",top:{xs:"5px",sm:"5px",md:"5px"} }}>
+              <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: "center", width: "100%", position: "relative", cursor: "pointer" }}>
+              <Typography sx={{ position: "absolute", left: "10px", top: { xs: "5px", sm: "5px", md: "5px", },fontWeight:"bold",fontSize:"1.5rem",color:"white",textTransform:"capitalize",width:"50%",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",textAlign:"justify"}}>
+                {selectedTvShow.title}
+              </Typography>
+                <Typography sx={{ position: "absolute", right: "10px", top: { xs: "5px", sm: "5px", md: "5px" }, display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
+                  <WatchLaterIcon sx={{ fontSize: '2rem', fontWeight: '800', color: 'white', ":hover": { color: "gray" } }} titleAccess='Watchlater' />
+                  <ShareIcon sx={{ fontSize: '2rem', fontWeight: '800', color: 'white', ":hover": { color: "gray" } }} titleAccess='Share' />
                   <IconButton onClick={handleClose} >
                     <CloseIcon sx={{ fontSize: '24px', fontWeight: '800', color: 'gray', backgroundColor: 'lightgray', borderRadius: '5px', ':hover': { color: 'darkgrey' } }} />
                   </IconButton>
                 </Typography>
-                
-               <Grid sx={{display:"flex",justifyContent:"center",alignItems:"center",}}>
-               <Typography sx={{ position: "absolute",bottom:{xs:"15px",sm:"15px",md:"10px",lg:"10px"},left:"20px",fontSize:{xs:"1rem",sm:"1.2rem",md:"1.2rem"} ,display: "flex", alignItems: "center", fontWeight: "bold", color: "black", backgroundColor: "#fff",borderRadius:"5px", transition: ".3s", cursor: "pointer", ":hover": { backgroundColor: "darkgrey" }, width:{xs:"20%",sm:"10%",md:"10%",lg:"10%"},padding:"5px 0",textAlign:"center",border:"3px solid black",outline:"2px solid gray" }}>
-                  <PlayArrowIcon sx={{fontSize:{xs:"1.2rem",sm:"1.2rem",md:"1.5rem"} }}/> Play 
-                </Typography>
-                <AddCircleOutlineOutlinedIcon sx={{position:"absolute",bottom:{xs:"15px",sm:"15px",md:"10px",lg:"8px",},left:{xs:"100px",sm:"120px",md:"120px",lg:"130px"},fontWeight:"400",color:"white",cursor:"pointer",fontSize:{xs:"2rem",sm:"2rem",md:"2.5rem"},":hover":{color:"darkgray"}}} />
-                <VolumeOffOutlinedIcon sx={{position:"absolute",bottom:{xs:"15px",sm:"15px",md:"10px",lg:"8px"},right:"20px",fontWeight:"400",color:"white",cursor:"pointer",fontSize:{xs:"2rem",sm:"2rem",md:"2.5rem"},backgroundColor:"transparent",border:"2px solid gray",borderRadius:"10px",":hover":{color:"darkgray"}}} />
 
-               </Grid>
-           
+                <Grid sx={{ display: "flex", justifyContent: "center", alignItems: "center", }}>
+                  <Typography sx={{ position: "absolute", bottom: { xs: "15px", sm: "15px", md: "10px", lg: "10px" }, left: "20px", fontSize: { xs: "1rem", sm: "1.2rem", md: "1.2rem" }, display: "flex", alignItems: "center", fontWeight: "bold", color: "black", backgroundColor: "#fff", borderRadius: "5px", transition: ".3s", cursor: "pointer", ":hover": { backgroundColor: "darkgrey" }, width: { xs: "20%", sm: "10%", md: "10%", lg: "10%" }, padding: "5px 0", textAlign: "center", border: "3px solid black", outline: "2px solid gray" }}>
+                    <PlayArrowIcon sx={{ fontSize: { xs: "1.2rem", sm: "1.2rem", md: "1.5rem" } }} /> Play
+                  </Typography>
+                  <AddCircleOutlineOutlinedIcon titleAccess='Save' sx={{ position: "absolute", bottom: { xs: "15px", sm: "15px", md: "10px", lg: "8px", },right:"80px", fontWeight: "400", color: "white", cursor: "pointer", fontSize: { xs: "2rem", sm: "2rem", md: "2.5rem" }, ":hover": { color: "darkgray" } }} />
+                  <VolumeOffOutlinedIcon titleAccess='Mute' sx={{ position: "absolute", bottom: { xs: "15px", sm: "15px", md: "10px", lg: "8px" }, right: "20px", fontWeight: "400", color: "white", cursor: "pointer", fontSize: { xs: "2rem", sm: "2rem", md: "2.5rem" }, backgroundColor: "transparent", border: "2px solid gray", borderRadius: "10px", ":hover": { color: "darkgray" } }} />
+
+                </Grid>
+                <YouTubeIcon sx={{ ...youtube }} />
                 <img
                   className='tvshow-mod-img'
                   src={'http://image.tmdb.org/t/p/w500' + selectedTvShow.poster_path}
@@ -124,9 +137,9 @@ export default function NewAndRecentlyMovie() {
                   style={{}}
                   loading='eager' // Set loading to eager 
                 />
-              
+
               </Grid>
-              <Grid item xs={12} sm={12} md={6} lg={6} sx={{ textAlign: "justify", paddingLeft:{xs:"5px",sm:"10px",md:"10px"},paddingBottom:"20px",paddingTop:"10px", width: "100%", color: "white" }}>
+              <Grid item xs={12} sm={12} md={6} lg={6} sx={{ textAlign: "justify", paddingLeft: { xs: "5px", sm: "10px", md: "10px" }, paddingBottom: "20px", paddingTop: "10px", width: "100%", color: "white" }}>
 
                 <Grid >
                   <Typography sx={{ fontSize: { xs: "14px", sm: "16px", md: "20px" }, }}>
@@ -134,12 +147,12 @@ export default function NewAndRecentlyMovie() {
                   </Typography>
                   <Grid sx={{ display: "flex", columnGap: "10px" }}>
                     <Typography sx={{ fontSize: { xs: "14px", sm: "16px", md: "20px", color: "#7FFF00" }, }}>
-                      {selectedTvShow.vote_count}%
+                      {selectedTvShow.vote_average}%
                     </Typography>
                     <Typography sx={{ fontSize: { xs: "14px", sm: "16px", md: "20px" }, color: "#7FFF00" }}>
                       {selectedTvShow.release_date}
                     </Typography>
-                    <Typography sx={{ fontSize: { xs: "12px", sm: "12px", md: "12px" }, border: "1px solid white",borderRadius:"3px", padding: "5px 5px", textTransform: "uppercase" }}>
+                    <Typography sx={{ fontSize: { xs: "12px", sm: "12px", md: "12px" }, border: "1px solid white", borderRadius: "3px", padding: "5px 5px", textTransform: "uppercase" }}>
                       {selectedTvShow.original_language}
                     </Typography>
                   </Grid>
@@ -159,8 +172,8 @@ export default function NewAndRecentlyMovie() {
           className='scroll-btn'
           sx={{ display: 'flex', overflowX: 'scroll', '&::-webkit-scrollbar': { display: 'none' }, position: "relative" }}
         >
-          <Grid className='scroll-button' onClick={() => handleScrollLeft()} sx={{ position: 'sticky', top: 0, left: 0, zIndex: 1, ":hover": { backgroundColor: "black", opacity: "0.3" }, borderRadius: "none", display: "flex", justifyContent: "center", alignItems: "center", padding: "0px 10px",width:"30px" }}>
-            <ArrowBackIosIcon className='scroll-icon' sx={{marginLeft:"10px", color: "black", fontSize: "2rem", zIndex: 2, }} />
+          <Grid className='scroll-button' onClick={() => handleScrollLeft()} sx={{ position: 'sticky', top: 0, left: 0, zIndex: 1, ":hover": { backgroundColor: "black", opacity: "0.3" }, borderRadius: "none", display: "flex", justifyContent: "center", alignItems: "center", padding: "0px 10px", width: "30px" }}>
+            <ArrowBackIosIcon className='scroll-icon' sx={{ marginLeft: "10px", color: "black", fontSize: "2rem", zIndex: 2, }} />
           </Grid>
           {movie.map((tv) => (
             <Grid
@@ -180,8 +193,8 @@ export default function NewAndRecentlyMovie() {
               </Grid>
             </Grid>
           ))}
-          <Grid className='scroll-button' onClick={() => handleScrollRight()} sx={{ position: 'sticky', top: 0, right: 0, zIndex: 1, ":hover": { backgroundColor: "black", opacity: "0.3" }, borderRadius: "none", display: "flex", justifyContent: "center", alignItems: "center", padding: "0px 10px",width:"30px" }} >
-            <ArrowForwardIosIcon className='scroll-icon' sx={{color: "black", fontSize: "2rem", zIndex: 2, }} />
+          <Grid className='scroll-button' onClick={() => handleScrollRight()} sx={{ position: 'sticky', top: 0, right: 0, zIndex: 1, ":hover": { backgroundColor: "black", opacity: "0.3" }, borderRadius: "none", display: "flex", justifyContent: "center", alignItems: "center", padding: "0px 10px", width: "30px" }} >
+            <ArrowForwardIosIcon className='scroll-icon' sx={{ color: "black", fontSize: "2rem", zIndex: 2, }} />
           </Grid>
         </Grid>
       </Container>
