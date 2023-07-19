@@ -12,11 +12,12 @@ import SearchBar from './Components/SearchField'
 const page: React.FC = () => {
   return (
     <Box id="home-page">
-      <Carousel/>
+      <Carousel />
       <UpcomingMovie />
-      <TopRatedMovie/>
-      <SearchBar/>
+      <TopRatedMovie />
+      <SearchBar />
       <PopularmoviePage />
+      
     </Box>
   );
 };

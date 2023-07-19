@@ -3,16 +3,27 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 .home-page {
-  filter: blur(5px); /* Adjust the blur radius as per your preference */
+  filter: blur(5px);
+  /* Adjust the blur radius as per your preference */
 }
+
 .red-background {
   filter: blur(1px);
 }
-/* .logo {
-  height: 50px;
-  width: 200px;
-} */
+
+.menuIcon {
+  border-radius: 3px;
+  height: 35px;
+  padding: 5px 10px;
+  border: 1px solid transparent;
+}
+
+.menuIcon:hover {
+  background-color: #1f1717;
+  border: 1px solid #352525;
+}
 
 .mt-80 {
   margin-top: 70px;
@@ -20,7 +31,7 @@
 
 .home-Img {
   transition: .1s;
-  
+
 }
 
 .home-Img:hover {
@@ -75,11 +86,6 @@
     padding: 5px;
   }
 
-  .logo {
-    height: 30px;
-    width: 150px;
-  }
-
   .model-body {
     text-align: center;
     width: 100%;
@@ -106,11 +112,6 @@
     padding: 5px;
   }
 
-  .logo {
-    height: 30px;
-    width: 150px;
-  }
-
   .model-body {
     text-align: center;
     width: 100%;
@@ -121,10 +122,12 @@
     height: 450px;
     width: 100%;
   }
+
   .slider-img {
     height: 500px;
-    
+
   }
+
   .footer-img {
     height: auto;
     width: auto;
@@ -136,11 +139,6 @@
     width: auto;
     height: auto;
     padding: 5px;
-  }
-
-  .logo {
-    height: 30px;
-    width: 150px;
   }
 
   .model-body {
@@ -169,11 +167,6 @@
     height: auto;
   }
 
-  .logo {
-    height: 30px;
-    width: 150px;
-  }
-
   .model-body {
     text-align: center;
     width: 100%;
@@ -191,43 +184,4 @@
   .img-tvshow {
     height: auto;
   }
-}
-
-
-
-/* search  */
-
-.search-bar {
-  position: relative;
-  overflow: hidden;
-  width: 200px; /* Adjust width as needed */
-}
-
-.search-input {
-  width: 0;
-  padding: 8px;
-  border: none;
-  background-color: transparent;
-  transition: width 0.3s ease-out;
-}
-
-.search-input.open {
-  width: 150px; /* Adjust width as needed */
-}
-
-.search-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 40px;
-  height: 100%;
-  padding: 8px;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  transition: right 0.3s ease-out;
-}
-
-.search-button.open {
-  right: 150px; /* Adjust the same value as search-input's width */
 }

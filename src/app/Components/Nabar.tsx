@@ -8,12 +8,12 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import NestedModal from './Search';
 import Link from 'next/link';
 import Container from '@mui/material/Container/Container'
 import Image from 'next/image';
-import logo from '../../../public/netflix-logo.png'
 import dynamic from "next/dynamic";
+import SearchBar from './SearchField';
+
 
 
 const pages = ['Home', 'TV Shows', 'Movies', 'Recently Added'];
@@ -66,7 +66,7 @@ function NavBar() {
                         }}
                     >
                         {/* logo */}
-                        <Image src={logo} alt="" height={30} width={150} className='logo' priority={true} />
+                        <Image src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="" height={40} width={150}  priority={true} />
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -77,7 +77,10 @@ function NavBar() {
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
                             color="inherit"
+                        className='menuIcon'
+                            
                         >
+                             <Image src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Netflix_2015_N_logo.svg" alt="" height={30} width={20} className='' priority={true} />
                             <MenuIcon sx={{ fontSize: "2.5rem" }} />
                         </IconButton>
                         <Menu
@@ -99,11 +102,10 @@ function NavBar() {
                             }}
                         >
                             {pages.map((page, index) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu} sx={{ padding: { xs: "10px 100px" }, textTransform: "uppercase", fontWeight: "800" }}>
-                                    <Typography variant='body2' textAlign="center"><Link href={pageLink[index]} style={{ textDecoration: "none", fontWeight: "bold" }}>{page}</Link></Typography>
+                                <MenuItem key={page} onClick={handleCloseNavMenu} sx={{ padding: { xs: "10px 100px" }, textTransform: "uppercase", fontWeight: "800", borderBottom: "1px solid gray" }}>
+                                    <Typography variant='body2' textAlign="center"><Link href={pageLink[index]} style={{ textDecoration: "none", fontWeight: "bold", color: "black" }}>{page}</Link></Typography>
                                 </MenuItem>
                             ))}
-
                         </Menu>
                     </Box>
                     <Typography
@@ -118,7 +120,7 @@ function NavBar() {
                         }}
                     >
                         {/* logo */}
-                        <Image src={logo} alt="" height={30} width={150} className='logo' priority={true} />
+                        {/* <Image src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Netflix_2015_N_logo.svg" alt="" height={30} width={150} className='' priority={true} /> */}
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page, index) => (
@@ -132,9 +134,8 @@ function NavBar() {
                             </Link>
                         ))}
                     </Box>
-
                     <Box sx={{ flexGrow: 0 }}>
-                        <NestedModal />
+                        <SearchBar />
                     </Box>
                 </Toolbar>
             </Container>
