@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
+
 import { Grid, Typography, Box, Button } from '@mui/material';
 import { FetchTMDBData } from './API/FetchTMDBData';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import PauseIcon from '@mui/icons-material/Pause';
+
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Modal from '@mui/material/Modal';
 import Container from '@mui/material/Container/Container';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import VolumeOffOutlinedIcon from '@mui/icons-material/VolumeOffOutlined';
-import axios from 'axios';
-
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import ReactPlayer from 'react-player';
+import PauseIcon from '@mui/icons-material/Pause';
+import axios from 'axios';
 
 interface TMDBMovie {
   id: number;
@@ -34,20 +36,8 @@ const style = {
   bgcolor: '#171717',
 };
 
-const youtubeStyle = {
-  hover: "none",
-};
-const videoStyle = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  width: "100%",
-  height: "500px",
-  transform: 'translate(-50%, -50%)',
-  fontSize: '100px',
-  fill: 'red',
 
-};
+
 
 const UpcomingMovie: React.FC = () => {
   const [movies, setMovies] = useState<TMDBMovie[]>([]);
@@ -55,38 +45,44 @@ const UpcomingMovie: React.FC = () => {
   const [selectedTvShow, setSelectedTvShow] = useState<TMDBMovie | null>(null);
   const [videoData, setVideoData] = useState<any | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-
+  const [isMuted, setIsMuted] = useState<boolean>(false);
 
   useEffect(() => {
-    async function fetchUpcomingMovie() {
+    async function fetchData() {
       try {
-        const upcommingApi = await FetchTMDBData();
-        if (upcommingApi && upcommingApi.results) {
-          setMovies(upcommingApi.results);
+        // Fetch upcoming movie data
+        const upcomingApi = await FetchTMDBData();
+        if (upcomingApi && upcomingApi.results) {
+          setMovies(upcomingApi.results);
         }
       } catch (error) {
         console.error('Error fetching data from TMDB:', error);
       }
     }
-    fetchUpcomingMovie();
+    fetchData();
   }, []);
 
   useEffect(() => {
-    // Fetch video data from TMDB API
-    const fetchVideoData = async () => {
+    // Fetch video data for each movie when movies state changes
+    const fetchVideoData = async (id: number) => {
       try {
         const response = await axios.get(
-          'https://api.themoviedb.org/3/movie/667538/videos?api_key=70832fbf4e20b8e11a44971719bde149'
+          `https://api.themoviedb.org/3/movie/${id}/videos?api_key=70832fbf4e20b8e11a44971719bde149&append_to_response=videos`
         );
-
-        setVideoData(response.data.results[0]);
+        const videoKey = response.data.results[0]?.key;
+        if (videoKey) {
+          setVideoData((prevData: any) => ({
+            ...prevData,
+            [id]: videoKey,
+          }));
+        }
       } catch (error) {
         console.error('Error fetching video data:', error);
       }
     };
 
-    fetchVideoData();
-  }, []);
+    movies.map((movie: TMDBMovie) => fetchVideoData(movie.id));
+  }, [movies]);
 
   const containerRef = React.useRef<HTMLDivElement>(null);
 
@@ -121,11 +117,14 @@ const UpcomingMovie: React.FC = () => {
   const handlePlayVideo = () => {
     setIsPlaying((prevState) => !prevState);
   };
+  const handleMute = () => {
+    setIsMuted((prevIsMuted) => !prevIsMuted);
+  };
 
   return (
+    <div>
     <Container maxWidth="xl">
       {/* Modal start here=================================== */}
-
       {selectedTvShow && (
         <Modal
           open={open}
@@ -134,33 +133,24 @@ const UpcomingMovie: React.FC = () => {
         >
           <Box className="model-body" sx={{ ...style, display: 'flex', flexDirection: 'column' }}>
             <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: 'center', width: '100%', position: 'relative', cursor: 'pointer' }}>
-
-
-              {/* <img src="/youtubelogo.png" alt="" height="auto" width="100px" style={youtubeStyle} /> */}
-
-
-              {/* <img
-                className="tvshow-mod-img"
-                src={'http://image.tmdb.org/t/p/w500' + selectedTvShow.poster_path}
-                alt=""
-                height="500px"
-                width="100%"
-                style={{}}
-                loading="lazy"
-              /> */}
-
-              {videoData && (
+              {selectedTvShow && videoData[selectedTvShow.id] && (
                 <ReactPlayer
                   playing={isPlaying}
                   controls={false}
+                  muted={isMuted}
                   autoplay={false}
-                  style={{ opacity: ".8", ...youtubeStyle }}
-                  url={`https://www.youtube.com/watch?v=${videoData.key}`}
+                  style={{ opacity: ".5", }}
+                  url={`https://www.youtube.com/watch?v=${videoData[selectedTvShow.id]}`}
                   width="100%"
                   height={500}
                   config={{
                     youtube: {
-                      playerVars: { showinfo: 0, disablekb: 1 },
+                      playerVars: {
+                        disablekb: 1, // Disable keyboard controls
+                        controls: 0, // Hide YouTube controls
+                        modestbranding: 1, // Hide YouTube logo
+                        rel: 1, // Disable related videos after playback
+                      },
                     },
                   }}
                 />
@@ -174,18 +164,24 @@ const UpcomingMovie: React.FC = () => {
                 <Typography onClick={handlePlayVideo} display={"inline"} sx={{ position: "absolute", bottom: "10px", left: "20px", }}>
                   {
                     isPlaying ? (
-                      <Button sx={{color:"black",background:"white",fontWeight:"bold",border:"2px solid black",outline:"2px solid white",textTransform:"capitalize",":hover":{background:"darkgray"}}}><PauseIcon />Pause</Button>
+                      <Button sx={{ color: "black", background: "white", fontWeight: "bold", border: "2px solid black", outline: "2px solid white", textTransform: "capitalize", ":hover": { background: "darkgray" } }}><PauseIcon />Pause</Button>
                     ) :
                       (
-                        <Button sx={{color:"black",background:"white",fontWeight:"bold",border:"2px solid black",outline:"2px solid white",textTransform:"capitalize",":hover":{background:"darkgray"}}}><PlayArrowIcon />Play</Button>
+                        <Button sx={{ color: "black", background: "white", fontWeight: "bold", border: "2px solid black", outline: "2px solid white", textTransform: "capitalize", ":hover": { background: "darkgray" } }}><PlayArrowIcon />Play</Button>
                       )
                   }
-
                 </Typography>
                 <AddCircleOutlineOutlinedIcon titleAccess="Save" sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '80px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.5rem' }, ':hover': { color: 'darkgray' } }} />
-                <VolumeOffOutlinedIcon titleAccess="Mute" sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '20px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.3rem' }, backgroundColor: 'transparent', border: '2px solid gray', borderRadius: '10px', ':hover': { color: 'darkgray' } }} />
+                <Typography onClick={handleMute}>
+                  {
+                    isMuted ? (
+                      <VolumeOffOutlinedIcon sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '20px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.3rem' }, backgroundColor: 'transparent', border: '2px solid gray', borderRadius: '10px', ':hover': { color: 'darkgray' } }} />
+                    ) : (
+                      <VolumeUpIcon sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '20px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.3rem' }, backgroundColor: 'transparent', border: '2px solid gray', borderRadius: '10px', ':hover': { color: 'darkgray' } }} />
+                    )
+                  }
+                </Typography>
               </Grid>
-
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} sx={{ textAlign: 'justify', paddingLeft: { xs: '5px', sm: '10px', md: '10px' }, paddingBottom: '20px', paddingTop: '10px', width: '100%', color: 'white' }}>
               <Grid>
@@ -225,7 +221,7 @@ const UpcomingMovie: React.FC = () => {
         </Grid>
         {movies.map((movie) => (
           <Grid key={movie.id} sx={{ cursor: 'pointer' }}>
-            <Grid sx={{ width: '250px', height: '350px', textAlign: 'center', padding: '0px 5px', overflow: 'hidden' }}>
+            <Grid sx={{ width: '250px', height: '350px', textAlign: 'center', padding: '0px 5px', overflow: 'hidden',display:"flex" }}>
               <img
                 onClick={() => handleOpen(movie)}
                 className="home-Img"
@@ -243,6 +239,7 @@ const UpcomingMovie: React.FC = () => {
         </Grid>
       </Grid>
     </Container>
+    </div>
   );
 };
 

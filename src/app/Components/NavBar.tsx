@@ -108,20 +108,7 @@ function NavBar() {
                             ))}
                         </Menu>
                     </Box>
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href=""
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                        }}
-                    >
-                        {/* logo */}
-                        {/* <Image src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Netflix_2015_N_logo.svg" alt="" height={30} width={150} className='' priority={true} /> */}
-                    </Typography>
+                   
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page, index) => (
                             <Link href={pageLink[index]} key={page} passHref style={{ textDecoration: "none" }}>

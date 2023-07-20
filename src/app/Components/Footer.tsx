@@ -28,7 +28,7 @@ export default function RowAndColumnSpacing() {
       <Container maxWidth="lg">
         <Grid container rowSpacing={1}>
           <Grid item xs={6} sm={3} md={3} lg={3} >
-            <Item sx={{ color: "gray", height: "250px", backgroundColor: "transparent", cursor: "pointer" }}>
+            <Item sx={{ color: "gray", height: "250px", backgroundColor: "transparent", cursor: "pointer",rowGap:"10px" }}>
               <Typography sx={{ textAlign: "right" }}>
                 <FacebookIcon sx={{ ...style, ":hover": { color: "red" } }} />
                 <InstagramIcon sx={{ ...style, ":hover": { color: "red" } }} />
@@ -38,9 +38,11 @@ export default function RowAndColumnSpacing() {
               <Typography>
                 <Link href="#" className='footer-link'>Audio Description</Link>
               </Typography>
+              <br />
               <Typography>
                 <Link href="#" className='footer-link'>Investor Relations</Link>
               </Typography>
+              <br />
               <Typography>
                 <Link href="#" className='footer-link'>Legal Notices</Link>
               </Typography>
@@ -56,7 +58,7 @@ export default function RowAndColumnSpacing() {
             </Item>
           </Grid>
           <Grid item xs={6} sm={3} md={3} lg={3} >
-            <Item sx={{ display: "flex", flexDirection: "column", justifyContent: "center", height: "250px", backgroundColor: "transparent", textAlign: "justify" }}>
+            <Item sx={{ display: "flex", flexDirection: "column", justifyContent: "center", height: "250px", backgroundColor: "transparent", textAlign: "justify",rowGap:"10px" }}>
               <Typography>
                 <Link href="#" className='footer-link'>Help Center</Link>
               </Typography>
@@ -69,7 +71,7 @@ export default function RowAndColumnSpacing() {
             </Item>
           </Grid>
           <Grid item xs={6} sm={3} md={3} lg={3} >
-            <Item sx={{ height: "250px", display: "flex", flexDirection: "column", justifyContent: "center", textAlign: "justify", backgroundColor: "transparent" }}>
+            <Item sx={{ height: "250px", display: "flex", flexDirection: "column", justifyContent: "center", textAlign: "justify", backgroundColor: "transparent",rowGap:"10px" }}>
               <Typography>
                 <Link href="#" className='footer-link'>Gift Card</Link>
               </Typography>
@@ -82,7 +84,7 @@ export default function RowAndColumnSpacing() {
             </Item>
           </Grid>
           <Grid item xs={6} sm={3} md={3} lg={3} >
-            <Item sx={{ height: "250px", display: "flex", flexDirection: "column", justifyContent: "center", textAlign: "justify", backgroundColor: "transparent" }}>
+            <Item sx={{ height: "250px", display: "flex", flexDirection: "column", justifyContent: "center", textAlign: "justify", backgroundColor: "transparent",rowGap:"10px" }}>
               <Typography>
                 <Link href="#" className='footer-link'>Media Center</Link>
               </Typography>

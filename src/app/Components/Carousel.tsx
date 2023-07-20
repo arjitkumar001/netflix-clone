@@ -9,12 +9,13 @@ import Stack from '@mui/material/Stack';
 import LinearIndeterminate from '@/app/Components/ProgressBar/Progressbar';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-import WatchLaterIcon from '@mui/icons-material/WatchLater';
-import ShareIcon from '@mui/icons-material/Share';
-import YouTubeIcon from '@mui/icons-material/YouTube';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import VolumeOffOutlinedIcon from '@mui/icons-material/VolumeOffOutlined';
 import Modal from '@mui/material/Modal';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import ReactPlayer from 'react-player';
+import PauseIcon from '@mui/icons-material/Pause';
+import axios from 'axios';
 
 
 interface Movie {
@@ -24,7 +25,7 @@ interface Movie {
   vote_average: number;
   release_date: string;
   overview: string
-  original_language:string
+  original_language: string
 }const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -47,6 +48,9 @@ const Carousel = () => {
   const [displayedMovies, setDisplayedMovies] = useState<Movie[]>([]);
   const [open, setOpen] = useState(false);
   const [selectedTvShow, setSelectedTvShow] = useState<Movie | null>(null);
+  const [videoData, setVideoData] = useState<any | null>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -63,6 +67,27 @@ const Carousel = () => {
 
     fetchMovies();
   }, []);
+  useEffect(() => {
+    // Fetch video data for each movie when movies state changes
+    const fetchVideoData = async (id: number) => {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/${id}/videos?api_key=70832fbf4e20b8e11a44971719bde149`
+        );
+        const videoKey = response.data.results[0]?.key;
+        if (videoKey) {
+          setVideoData((prevData: any) => ({
+            ...prevData,
+            [id]: videoKey,
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching video data:', error);
+      }
+    };
+
+    movies.map((movie: Movie) => fetchVideoData(movie.id));
+  }, [movies]);
 
 
   useEffect(() => {
@@ -77,89 +102,114 @@ const Carousel = () => {
     setOpen(false);
     setSelectedTvShow(null);
   };
+  const handlePlayVideo = () => {
+    setIsPlaying((prevState) => !prevState);
+  };
+  const handleMute = () => {
+    setIsMuted((prevIsMuted) => !prevIsMuted);
+  };
 
 
   return (
-    <Box>
-       {selectedTvShow && (
+    <div>
+      {selectedTvShow && (
         <Modal
           open={open}
           onClose={handleClose}
-          sx={{ backgroundColor: "rgba(23, 23, 23,0.8)", }}
+          sx={{ backgroundColor: 'rgba(23, 23, 23,0.8)' }}
         >
-          <Box className="model-body" sx={{ ...style, display: "flex", flexDirection: "column", }} >
-            <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: "center", width: "100%", position: "relative", cursor: "pointer" }}>
-              <Typography sx={{ position: "absolute", left: "10px", top: { xs: "5px", sm: "5px", md: "5px", }, fontWeight: "bold", fontSize: "1.5rem", color: "white", textTransform: "capitalize", width: "50%", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", textAlign: "justify" }}>
-                {selectedTvShow.title}
-              </Typography>
-              <Typography sx={{ position: "absolute", right: "10px", top: { xs: "5px", sm: "5px", md: "5px", }, display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
-                <WatchLaterIcon sx={{ fontSize: '2rem', fontWeight: '800', color: 'white', ":hover": { color: "gray" } }} titleAccess='Watchlater' />
-                <ShareIcon sx={{ fontSize: '2rem', fontWeight: '800', color: 'white', ":hover": { color: "gray" } }} titleAccess='Share' />
-                <IconButton onClick={handleClose} >
-                  <CloseIcon sx={{ fontSize: '24px', fontWeight: '800', color: 'gray', backgroundColor: 'lightgray', borderRadius: '5px', ':hover': { color: 'darkgrey' } }} titleAccess='Close' />
+          <Box className="model-body" sx={{ ...style, display: 'flex', flexDirection: 'column' }}>
+            <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: 'center', width: '100%', position: 'relative', cursor: 'pointer' }}>
+              {selectedTvShow && videoData[selectedTvShow.id] && (
+                <ReactPlayer
+                  playing={isPlaying}
+                  controls={false}
+                  muted={isMuted}
+                  autoplay={false}
+                  style={{ opacity: ".5", }}
+                  url={`https://www.youtube.com/watch?v=${videoData[selectedTvShow.id]}`}
+                  width="100%"
+                  height={500}
+                  config={{
+                    youtube: {
+                      playerVars: { showinfo: 0, disablekb: 1 },
+                    },
+                  }}
+                />
+              )}
+              <Typography sx={{ position: 'absolute', right: '10px', top: { xs: '5px', sm: '5px', md: '5px' }, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px' }}>
+                <IconButton onClick={handleClose}>
+                  <CloseIcon sx={{ fontSize: '24px', fontWeight: '800', color: 'gray', backgroundColor: 'lightgray', borderRadius: '5px', ':hover': { color: 'darkgrey' } }} titleAccess="Close" />
                 </IconButton>
               </Typography>
-              <Grid sx={{ display: "flex", justifyContent: "center", alignItems: "center", }}>
-                <Typography display={"inline"} sx={{ position: "absolute", bottom: { xs: "15px", sm: "15px", md: "10px", lg: "10px" }, left: "20px", fontSize: { xs: "1rem", sm: "1.2rem", md: "1.2rem" }, display: "flex", alignItems: "center", fontWeight: "bold", color: "black", backgroundColor: "#fff", borderRadius: "5px", transition: ".3s", cursor: "pointer", ":hover": { backgroundColor: "darkgrey" }, width: { xs: "20%", sm: "14%", md: "15%", lg: "12%" }, padding: "5px 0", textAlign: "center", border: "3px solid black", outline: "2px solid gray" }}>
-                  <PlayArrowIcon sx={{ fontSize: { xs: "1.2rem", sm: "1.2rem", md: "1.5rem" } }} /> Play
+              <Grid sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Typography onClick={handlePlayVideo} display={"inline"} sx={{ position: "absolute", bottom: "10px", left: "20px", }}>
+                  {
+                    isPlaying ? (
+                      <Button sx={{ color: "black", background: "white", fontWeight: "bold", border: "2px solid black", outline: "2px solid white", textTransform: "capitalize", ":hover": { background: "darkgray" } }}><PauseIcon />Pause</Button>
+                    ) :
+                      (
+                        <Button sx={{ color: "black", background: "white", fontWeight: "bold", border: "2px solid black", outline: "2px solid white", textTransform: "capitalize", ":hover": { background: "darkgray" } }}><PlayArrowIcon />Play</Button>
+                      )
+                  }
                 </Typography>
-                <AddCircleOutlineOutlinedIcon titleAccess='Save' sx={{ position: "absolute", bottom: { xs: "15px", sm: "15px", md: "10px", lg: "8px", }, right: "80px", fontWeight: "400", color: "white", cursor: "pointer", fontSize: { xs: "2rem", sm: "2rem", md: "2.5rem" }, ":hover": { color: "darkgray" } }} />
-                <VolumeOffOutlinedIcon titleAccess='Mute' sx={{ position: "absolute", bottom: { xs: "15px", sm: "15px", md: "10px", lg: "8px" }, right: "20px", fontWeight: "400", color: "white", cursor: "pointer", fontSize: { xs: "2rem", sm: "2rem", md: "2.3rem" }, backgroundColor: "transparent", border: "2px solid gray", borderRadius: "10px", ":hover": { color: "darkgray" } }} />
-
+                <AddCircleOutlineOutlinedIcon titleAccess="Save" sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '80px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.5rem' }, ':hover': { color: 'darkgray' } }} />
+                <Typography onClick={handleMute}>
+                  {
+                    isMuted ? (
+                      <VolumeOffOutlinedIcon sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '20px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.3rem' }, backgroundColor: 'transparent', border: '2px solid gray', borderRadius: '10px', ':hover': { color: 'darkgray' } }} />
+                    ) : (
+                      <VolumeUpIcon sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '20px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.3rem' }, backgroundColor: 'transparent', border: '2px solid gray', borderRadius: '10px', ':hover': { color: 'darkgray' } }} />
+                    )
+                  }
+                </Typography>
               </Grid>
-              <YouTubeIcon sx={{ ...youtube ,}} />
-              <img
-                className='tvshow-mod-img'
-                src={'http://image.tmdb.org/t/p/w500' + selectedTvShow.backdrop_path}
-                alt=''
-                height="500px"
-                width="100%"
-                style={{}}
-                loading='lazy' // Set loading to eager 
-              />
-
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={6} sx={{ textAlign: "justify", paddingLeft: { xs: "5px", sm: "10px", md: "10px" }, paddingBottom: "20px", paddingTop: "10px", width: "100%", color: "white" }}>
-
-              <Grid >
-                <Typography sx={{ fontSize: { xs: "14px", sm: "16px", md: "20px" }, }}>
+            <Grid item xs={12} sm={12} md={6} lg={6} sx={{ textAlign: 'justify', paddingLeft: { xs: '5px', sm: '10px', md: '10px' }, paddingBottom: '20px', paddingTop: '10px', width: '100%', color: 'white' }}>
+              <Grid>
+                <Typography sx={{ fontSize: { xs: '14px', sm: '16px', md: '20px' } }}>
                   Title: {selectedTvShow.title}
                 </Typography>
-                <Grid sx={{ display: "flex", columnGap: "10px" }}>
-                  <Typography sx={{ fontSize: { xs: "14px", sm: "16px", md: "20px", color: "#7FFF00" }, }}>
+                <Grid sx={{ display: 'flex', columnGap: '10px' }}>
+                  <Typography sx={{ fontSize: { xs: '14px', sm: '16px', md: '20px', color: '#7FFF00' } }}>
                     {selectedTvShow.vote_average}%
                   </Typography>
-                  <Typography sx={{ fontSize: { xs: "14px", sm: "16px", md: "20px" }, color: "#7FFF00" }}>
+                  <Typography sx={{ fontSize: { xs: '14px', sm: '16px', md: '20px' }, color: '#7FFF00' }}>
                     {selectedTvShow.release_date}
                   </Typography>
-                  <Typography sx={{ fontSize: { xs: "12px", sm: "12px", md: "12px" }, border: "1px solid white", borderRadius: "3px", padding: "5px 7px", textTransform: "uppercase" }}>
+                  <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '12px' }, border: '1px solid white', borderRadius: '3px', padding: '5px 7px', textTransform: 'uppercase' }}>
                     {selectedTvShow.original_language}
                   </Typography>
                 </Grid>
-                <Typography sx={{ fontSize: { xs: "12px", sm: "12px", md: "14px" }, }}>
+                <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '14px' } }}>
                   {selectedTvShow.overview}
                 </Typography>
               </Grid>
             </Grid>
           </Box>
+
         </Modal>
       )}
       {displayedMovies.length > 0 ? (
         <CarouselComponent showThumbs={false}>
           {displayedMovies.slice(10, 15).map((movie) => (
-            <Box key={movie.id}>
+            <Box key={movie.id} sx={{ width: "100%" }}>
               {movie.backdrop_path && (
                 <img
                   className='slider-img'
                   src={`http://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
                   alt={movie.title + " image"}
-                  width="100%"
-                  height="700px"
-                  loading='lazy' 
-                  style={{opacity:"0.3"}}
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    objectFit: "cover",
+                    objectPosition:"center",
+                    opacity: "0.3",
+                  }}
+                  loading='lazy'
                 />
               )}
-              <Box position={"absolute"} sx={{ bottom: {lg:"70px", md: "70px", sm: "50px", xs: "30px" }, marginTop: '-100px', textAlign: "justify", width: { sm: "80%", xs: "100%" }, paddingLeft: { sm: "30px", xs: "10px" }, paddingRight: { sm: "0px", xs: "10px" } }}>
+              <Grid position={"absolute"} sx={{ bottom: { lg: "70px", md: "70px", sm: "50px", xs: "30px" }, marginTop: '-100px', textAlign: "justify", width: { sm: "80%", xs: "100%" }, paddingLeft: { sm: "30px", xs: "10px" }, paddingRight: { sm: "0px", xs: "10px" } }}>
                 <Typography
                   sx={{
                     color: 'white',
@@ -172,18 +222,18 @@ const Carousel = () => {
                 </Typography>
                 <Typography sx={{ fontSize: { sm: '16px', xs: '14px', }, }}><span style={{ color: "#7FFF00" }}>{movie.vote_average}%</span> <span style={{ color: "#ffff" }}>{movie.release_date}</span></Typography>
                 <Typography component={"p"} variant='body2' sx={{ color: "#ffff", fontSize: { sm: '16px', xs: '12px', } }}>{movie.overview}</Typography>
-                <Stack  spacing={2} direction="row" marginTop={"10px"} sx={{ fontSize: { sm: '16px', xs: '14px', } }}>
-                  <Button  onClick={() => handleOpen(movie)} variant="contained" sx={{ color: "#000", fontWeight: "bold", backgroundColor: "white", ":hover": { backgroundColor: "#2F4F4F" }, padding: { xs: "5px 10px", }, fontSize: { xs: "12px" }, textAlign: "center" }}><PlayArrowIcon /> Play</Button>
-                  <Button  onClick={() => handleOpen(movie)} variant="outlined" sx={{ color: "white", border: "1px solid gray", padding: { xs: "5px 5px", }, fontSize: { xs: "12px" } }}><InfoOutlinedIcon /> More info</Button>
+                <Stack spacing={2} direction="row" marginTop={"10px"} sx={{ fontSize: { sm: '16px', xs: '14px', } }}>
+                  <Button onClick={() => handleOpen(movie)} variant="contained" sx={{ color: "#000", fontWeight: "bold", backgroundColor: "white", ":hover": { backgroundColor: "#2F4F4F" }, padding: { xs: "5px 10px", }, fontSize: { xs: "12px" }, textAlign: "center" }}><PlayArrowIcon /> Play</Button>
+                  <Button onClick={() => handleOpen(movie)} variant="outlined" sx={{ color: "white", border: "1px solid gray", padding: { xs: "5px 5px", }, fontSize: { xs: "12px" } }}><InfoOutlinedIcon /> More info</Button>
                 </Stack>
-              </Box>
+              </Grid>
             </Box>
           ))}
         </CarouselComponent>
       ) : (
         <Typography sx={{ marginTop: "70px" }}><LinearIndeterminate /></Typography>
       )}
-    </Box>
+    </div>
   );
 };
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const apikey = "70832fbf4e20b8e11a44971719bde149";
-const endpoint = '/trending/tv/day';
+const endpoint = '/discover/movie';
 
 export async function TvShow(): Promise<any> {
   const url = `${TMDB_BASE_URL}${endpoint}?api_key=${apikey}`;

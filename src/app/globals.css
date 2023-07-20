@@ -4,15 +4,6 @@
   box-sizing: border-box;
 }
 
-.home-page {
-  filter: blur(5px);
-  /* Adjust the blur radius as per your preference */
-}
-
-.red-background {
-  filter: blur(1px);
-}
-
 .menuIcon {
   border-radius: 3px;
   height: 35px;
@@ -77,6 +68,9 @@
   text-decoration: underline;
   color: #3b3bf3;
 }
+ .slider-img {
+    max-width: 100%;
+  }
 
 
 @media screen and (max-width:992px) {
@@ -99,9 +93,9 @@
     width: 100%;
   }
 
-  .slider-img {
+  /* .slider-img {
     height: 500px;
-  }
+  } */
 
 }
 
@@ -123,10 +117,9 @@
     width: 100%;
   }
 
-  .slider-img {
+  /* .slider-img {
     height: 500px;
-
-  }
+  } */
 
   .footer-img {
     height: auto;
@@ -152,9 +145,9 @@
     width: 100%;
   }
 
-  .slider-img {
+  /* .slider-img {
     height: 400px;
-  }
+  } */
 
   .img-tvshow {
     height: auto;
@@ -177,9 +170,9 @@
     width: 100%;
   }
 
-  .slider-img {
+  /* .slider-img {
     height: 400px;
-  }
+  } */
 
   .img-tvshow {
     height: auto;
