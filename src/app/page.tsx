@@ -6,17 +6,15 @@ import Carousel from './Components/Carousel'
 import TopRatedMovie from './Components/TopRatedMovie'
 import PopularmoviePage from './Components/PopularMovies'
 import UpcomingMovie from './Components/UpcomingMovie'
-import SearchBar from './Components/SearchField'
-
 
 const page: React.FC = () => {
   return (
     <Box id="home-page">
-      <Carousel/>
+      <Carousel />
       <UpcomingMovie />
-      <TopRatedMovie/>
-      <SearchBar/>
+      <TopRatedMovie />
       <PopularmoviePage />
+      
     </Box>
   );
 };
