@@ -34,14 +34,6 @@ interface Movie {
   transform: 'translate(-50%, -50%)',
   bgcolor: '#171717',
 };
-const youtube = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  fontSize: "100px",
-  fill: "red"
-};
 
 const Carousel = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
