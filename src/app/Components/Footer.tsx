@@ -17,7 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
   boxShadow: "none"
 }));
 const style = {
-  fontSize: "1.8rem",
+  fontSize: "1.5rem",
   color: "white",
   marginRight: "20px",
 };
@@ -35,15 +35,15 @@ export default function RowAndColumnSpacing() {
                 <TwitterIcon sx={{ ...style, ":hover": { color: "red" } }} />
                 <YouTubeIcon sx={{ ...style, ":hover": { color: "red" } }} />
               </Typography>
-              <Typography>
+              <Typography variant='body2'>
                 <Link href="#" className='footer-link'>Audio Description</Link>
               </Typography>
               <br />
-              <Typography>
+              <Typography variant='body2'>
                 <Link href="#" className='footer-link'>Investor Relations</Link>
               </Typography>
               <br />
-              <Typography>
+              <Typography variant='body2'>
                 <Link href="#" className='footer-link'>Legal Notices</Link>
               </Typography>
               <br />
@@ -59,39 +59,39 @@ export default function RowAndColumnSpacing() {
           </Grid>
           <Grid item xs={6} sm={3} md={3} lg={3} >
             <Item sx={{ display: "flex", flexDirection: "column", justifyContent: "center", height: "250px", backgroundColor: "transparent", textAlign: "justify",rowGap:"10px" }}>
-              <Typography>
+              <Typography variant='body2'>
                 <Link href="#" className='footer-link'>Help Center</Link>
               </Typography>
-              <Typography>
+              <Typography variant='body2'> 
                 <Link href="#" className='footer-link'>Jobs</Link>
               </Typography>
-              <Typography>
+              <Typography variant='body2'>
                 <Link href="#" className='footer-link'>Cookies Preferences</Link>
               </Typography>
             </Item>
           </Grid>
           <Grid item xs={6} sm={3} md={3} lg={3} >
             <Item sx={{ height: "250px", display: "flex", flexDirection: "column", justifyContent: "center", textAlign: "justify", backgroundColor: "transparent",rowGap:"10px" }}>
-              <Typography>
+              <Typography variant='body2'>
                 <Link href="#" className='footer-link'>Gift Card</Link>
               </Typography>
-              <Typography>
+              <Typography variant='body2'>
                 <Link href="#" className='footer-link'>Term of use</Link>
               </Typography>
-              <Typography>
+              <Typography variant='body2'>
                 <Link href="#" className='footer-link'>Corporate Information</Link>
               </Typography>
             </Item>
           </Grid>
           <Grid item xs={6} sm={3} md={3} lg={3} >
             <Item sx={{ height: "250px", display: "flex", flexDirection: "column", justifyContent: "center", textAlign: "justify", backgroundColor: "transparent",rowGap:"10px" }}>
-              <Typography>
+              <Typography variant='body2'>
                 <Link href="#" className='footer-link'>Media Center</Link>
               </Typography>
-              <Typography>
+              <Typography variant='body2'>
                 <Link href="#" className='footer-link'>Privacy</Link>
               </Typography>
-              <Typography>
+              <Typography variant='body2'>
                 <Link href="#" className='footer-link'>Contact Us</Link>
               </Typography>
 

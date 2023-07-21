@@ -111,7 +111,7 @@ const Carousel = () => {
 
 
   return (
-    <div>
+    <Box>
       {selectedTvShow && (
         <Modal
           open={open}
@@ -181,7 +181,7 @@ const Carousel = () => {
                     {selectedTvShow.original_language}
                   </Typography>
                 </Grid>
-                <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '14px' } }}>
+                <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '14px' },whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",width:"100%"}}>
                   {selectedTvShow.overview}
                 </Typography>
               </Grid>
@@ -201,7 +201,7 @@ const Carousel = () => {
                   alt={movie.title + " image"}
                   style={{
                     width: "100%",
-                    height: "auto",
+                    height: "100%",
                     objectFit: "cover",
                     objectPosition:"center",
                     opacity: "0.3",
@@ -221,7 +221,7 @@ const Carousel = () => {
                   {movie.title}
                 </Typography>
                 <Typography sx={{ fontSize: { sm: '16px', xs: '14px', }, }}><span style={{ color: "#7FFF00" }}>{movie.vote_average}%</span> <span style={{ color: "#ffff" }}>{movie.release_date}</span></Typography>
-                <Typography component={"p"} variant='body2' sx={{ color: "#ffff", fontSize: { sm: '16px', xs: '12px', } }}>{movie.overview}</Typography>
+                <Typography component={"p"} variant='body2' sx={{ color: "#ffff", fontSize: { sm: '16px', xs: '12px', },whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",width:"100%"  }}>{movie.overview}</Typography>
                 <Stack spacing={2} direction="row" marginTop={"10px"} sx={{ fontSize: { sm: '16px', xs: '14px', } }}>
                   <Button onClick={() => handleOpen(movie)} variant="contained" sx={{ color: "#000", fontWeight: "bold", backgroundColor: "white", ":hover": { backgroundColor: "#2F4F4F" }, padding: { xs: "5px 10px", }, fontSize: { xs: "12px" }, textAlign: "center" }}><PlayArrowIcon /> Play</Button>
                   <Button onClick={() => handleOpen(movie)} variant="outlined" sx={{ color: "white", border: "1px solid gray", padding: { xs: "5px 5px", }, fontSize: { xs: "12px" } }}><InfoOutlinedIcon /> More info</Button>
@@ -233,7 +233,7 @@ const Carousel = () => {
       ) : (
         <Typography sx={{ marginTop: "70px" }}><LinearIndeterminate /></Typography>
       )}
-    </div>
+    </Box>
   );
 };
 
