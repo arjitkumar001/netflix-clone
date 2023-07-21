@@ -3,14 +3,13 @@ import { IconButton, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
+
 import Box from '@mui/material/Box';
 import SignIn from './SignIn';
 
+
 const SearchBar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-
- 
   const handleSearchOpen = () => {
     setIsSearchOpen(true);
   };
@@ -19,7 +18,7 @@ const SearchBar = () => {
     setIsSearchOpen(false);
   };
 
-  const alertMessage=()=>{
+  const alertMessage = () => {
     alert("Click me for something New")
   }
 
@@ -27,11 +26,13 @@ const SearchBar = () => {
     <Box sx={{ display: "flex", justifyContent: "center,", alignItems: "center", rowGap: "10px", columnGap: "20px" }}>
       <Grid style={{ display: 'flex', alignItems: 'center' }}>
         <IconButton size="large" onClick={handleSearchOpen}>
+
           <SearchIcon sx={{
             fontSize: { xs: "1.5rem", sm: "2rem" },
             color: "white",
             display: isSearchOpen ? 'none' : 'block',
           }} titleAccess='search' />
+
         </IconButton>
         <Grid
           style={{
@@ -66,13 +67,12 @@ const SearchBar = () => {
                 ),
               }}
             />
+
           )}
-
-
         </Grid>
       </Grid>
-      <NotificationsIcon onClick={()=>alertMessage()} sx={{ fontSize: "2rem", color: "white", display: { xs: 'none', md: 'flex' } }} titleAccess='Notification' />
-      <SignIn/>
+      <NotificationsIcon onClick={() => alertMessage()} sx={{ fontSize: "2rem", color: "white", display: { xs: 'none', md: 'flex' } }} titleAccess='Notification' />
+      <SignIn />
     </Box>
   );
 };

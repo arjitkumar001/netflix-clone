@@ -1,17 +1,13 @@
 'use client'
-import React from 'react'
-import Search from '../Components/Search/Search'
-import Box from '@mui/material/Box';
+import React from 'react';
 
-const page = () => {
+const Page = () => {
   return (
-    <Box sx={{marginTop:"70px"}}>
-        <Box>
-      <h1>Movie Search</h1>
-      <Search />
-    </Box>
-    </Box>
-  )
-}
+    <div style={{marginTop:"70px",color:"white"}}>
+      <h1>Search movie</h1>
+     
+    </div>
+  );
+};
 
-export default page
+export default Page;
