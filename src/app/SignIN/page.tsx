@@ -8,7 +8,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 const page = () => {
     return (
         <Box sx={{ height: "100vh", width: "100%", display: "flex", justifyContent: "center", alignItems: "center", transform: "translate(-50% -50%)" }}>
-            <Grid sx={{ background: "rgba(39,39,42,.25)", width: "30%", textAlign: "center", padding: "50px 0", borderRadius: "10px" }}>
+            <Grid sx={{ background: "rgba(39,39,42,.25)", width:{lg:"30%",md:"40%",sm:"50%",xs:"90%"}, textAlign: "center", padding: "50px 0", borderRadius: "10px" }}>
                 <Typography variant='h4' sx={{ padding: "10px 0", fontWeight: "800", color: "white" }}>
                     Sign in
                 </Typography>

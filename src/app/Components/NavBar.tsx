@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import { Grid } from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -55,19 +56,15 @@ function NavBar() {
         <AppBar position="fixed" sx={{ backgroundColor: { lg: scrollColor, md: scrollColor, sm: '#171717', xs: '#171717' }, boxShadow: "none", height: "70px" }}>
             <Container maxWidth="xl">
                 <Toolbar >
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
+                    <Grid
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
                         }}
                     >
                         {/* logo */}
-                        <Image src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="" height={40} width={150}  priority={true} />
-                    </Typography>
+                        <Image src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="" height={40} width={150} priority={true} />
+                    </Grid>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -77,10 +74,10 @@ function NavBar() {
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
                             color="inherit"
-                        className='menuIcon'
-                            
+                            className='menuIcon'
+
                         >
-                             <Image src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Netflix_2015_N_logo.svg" alt="" height={30} width={20} className='' priority={true} />
+                            <Image src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Netflix_2015_N_logo.svg" alt="" height={30} width={20} className='' priority={true} />
                             <MenuIcon sx={{ fontSize: "2.5rem" }} />
                         </IconButton>
                         <Menu
@@ -108,7 +105,7 @@ function NavBar() {
                             ))}
                         </Menu>
                     </Box>
-                   
+
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page, index) => (
                             <Link href={pageLink[index]} key={page} passHref style={{ textDecoration: "none" }}>

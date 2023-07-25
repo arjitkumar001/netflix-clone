@@ -18,6 +18,7 @@ import ReactPlayer from 'react-player';
 import PauseIcon from '@mui/icons-material/Pause';
 import axios from 'axios';
 
+
 interface TMDBMovie {
   id: number;
   original_title: string
@@ -117,8 +118,8 @@ const PopularmoviePage: React.FC = () => {
 
 
   return (
-    <div>
-      <Container maxWidth="xl">
+    <>
+    
         {/* Modal start here=================================== */}
         {selectedTvShow && (
         <Modal
@@ -198,6 +199,7 @@ const PopularmoviePage: React.FC = () => {
 
         </Modal>
       )}
+        <Container maxWidth="xl">
         <Typography variant='h4' sx={{ color: "gray", padding: "10px 20px", textTransform: "uppercase", textAlign: "justify", fontSize: { xs: "20px" } }}>Popular TV Show</Typography>
         <Grid
           ref={containerRef}
@@ -231,7 +233,7 @@ const PopularmoviePage: React.FC = () => {
           </Grid>
         </Grid>
       </Container>
-    </div>
+    </>
   );
 };
 

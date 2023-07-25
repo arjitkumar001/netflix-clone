@@ -21,6 +21,7 @@ import ReactPlayer from 'react-player';
 import PauseIcon from '@mui/icons-material/Pause';
 import axios from 'axios';
 
+
 interface movieData {
   id: number;
   poster_path: string;
@@ -123,8 +124,8 @@ export default function NewAndRecentlyMovie() {
 
 
   return (
-    <div>
-      <Container maxWidth="xl">
+    <>
+      
         {/* Modal start here=================================== */}
         {selectedTvShow && (
         <Modal
@@ -204,6 +205,7 @@ export default function NewAndRecentlyMovie() {
 
         </Modal>
       )}
+      <Container maxWidth="xl">
         <Typography variant='h4' sx={{ color: 'gray', padding: '10px 20px', textTransform: 'uppercase', textAlign: 'justify', fontSize: { xs: "20px" } }}>
           New & Recently Add
         </Typography>
@@ -238,6 +240,6 @@ export default function NewAndRecentlyMovie() {
           </Grid>
         </Grid>
       </Container>
-    </div>
+    </>
   );
 }

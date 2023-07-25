@@ -3,7 +3,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 .menuIcon {
   border-radius: 3px;
   height: 35px;
@@ -88,9 +87,6 @@
     height: 450px;
     width: 100%;
   }
-
-
- 
 }
 
 @media screen and (max-width:768px) {
