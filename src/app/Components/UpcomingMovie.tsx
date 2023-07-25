@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-
 import { Grid, Typography, Box, Button } from '@mui/material';
 import { FetchTMDBData } from './API/FetchTMDBData';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Modal from '@mui/material/Modal';
@@ -16,6 +14,7 @@ import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import ReactPlayer from 'react-player';
 import PauseIcon from '@mui/icons-material/Pause';
 import axios from 'axios';
+
 
 interface TMDBMovie {
   id: number;
@@ -122,8 +121,8 @@ const UpcomingMovie: React.FC = () => {
   };
 
   return (
-    <div>
-    <Container maxWidth="xl">
+    <>
+   
       {/* Modal start here=================================== */}
       {selectedTvShow && (
         <Modal
@@ -139,7 +138,7 @@ const UpcomingMovie: React.FC = () => {
                   controls={false}
                   muted={isMuted}
                   autoplay={false}
-                  style={{ opacity: ".5", }}
+                  style={{ opacity: ".5"}}
                   url={`https://www.youtube.com/watch?v=${videoData[selectedTvShow.id]}`}
                   width="100%"
                   height={500}
@@ -147,7 +146,6 @@ const UpcomingMovie: React.FC = () => {
                     youtube: {
                       playerVars: {
                         disablekb: 1, // Disable keyboard controls
-                        controls: 0, // Hide YouTube controls
                         modestbranding: 1, // Hide YouTube logo
                         rel: 1, // Disable related videos after playback
                       },
@@ -175,9 +173,9 @@ const UpcomingMovie: React.FC = () => {
                 <Typography onClick={handleMute}>
                   {
                     isMuted ? (
-                      <VolumeOffOutlinedIcon sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '20px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.3rem' }, backgroundColor: 'transparent', border: '2px solid gray', borderRadius: '10px', ':hover': { color: 'darkgray' } }} />
+                      <VolumeOffOutlinedIcon titleAccess='Mute' sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '20px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.3rem' }, backgroundColor: 'transparent', border: '2px solid gray', borderRadius: '10px', ':hover': { color: 'darkgray' } }} />
                     ) : (
-                      <VolumeUpIcon sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '20px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.3rem' }, backgroundColor: 'transparent', border: '2px solid gray', borderRadius: '10px', ':hover': { color: 'darkgray' } }} />
+                      <VolumeUpIcon titleAccess='Unmute' sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '20px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.3rem' }, backgroundColor: 'transparent', border: '2px solid gray', borderRadius: '10px', ':hover': { color: 'darkgray' } }} />
                     )
                   }
                 </Typography>
@@ -208,6 +206,7 @@ const UpcomingMovie: React.FC = () => {
 
         </Modal>
       )}
+       <Container maxWidth="xl" sx={{marginTop:""}}>
       <Typography variant="h4" sx={{ color: 'gray', padding: '10px 20px', textTransform: 'uppercase', textAlign: 'justify', fontSize: { xs: '20px' } }}>
         Up Coming
       </Typography>
@@ -216,12 +215,12 @@ const UpcomingMovie: React.FC = () => {
         className="scroll-btn"
         sx={{ display: 'flex', overflowX: 'scroll', '&::-webkit-scrollbar': { display: 'none' }, position: 'relative' }}
       >
-        <Grid className="scroll-button" onClick={handleScrollLeft} sx={{ textAlign: 'center', position: 'sticky', top: 0, left: 0, zIndex: 1, ':hover': { backgroundColor: 'black', opacity: '0.3' }, borderRadius: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0px 10px', width: '30px' }}>
+        <Grid item xs={12} className="scroll-button" onClick={handleScrollLeft} sx={{ textAlign: 'center', position: 'sticky', top: 0, left: 0, zIndex: 1, ':hover': { backgroundColor: 'black', opacity: '0.3' }, borderRadius: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0px 10px', width: '30px' }}>
           <ArrowBackIosIcon className="scroll-icon" sx={{ color: 'black', fontSize: '2rem', zIndex: 2, marginLeft: '10px' }} />
         </Grid>
         {movies.map((movie) => (
           <Grid key={movie.id} sx={{ cursor: 'pointer' }}>
-            <Grid sx={{ width: '250px', height: '350px', textAlign: 'center', padding: '0px 5px', overflow: 'hidden',display:"flex" }}>
+            <Grid item xs={12} sx={{ width: '250px', height: '350px', textAlign: 'center', padding: '0px 5px', overflow: 'hidden',display:"flex" }}>
               <img
                 onClick={() => handleOpen(movie)}
                 className="home-Img"
@@ -234,12 +233,12 @@ const UpcomingMovie: React.FC = () => {
             </Grid>
           </Grid>
         ))}
-        <Grid className="scroll-button" onClick={handleScrollRight} sx={{ position: 'sticky', top: 0, right: 0, zIndex: 1, ':hover': { backgroundColor: 'black', opacity: '0.3' }, borderRadius: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0px 10px', width: '30px' }}>
+        <Grid item xs={12} className="scroll-button" onClick={handleScrollRight} sx={{ position: 'sticky', top: 0, right: 0, zIndex: 1, ':hover': { backgroundColor: 'black', opacity: '0.3' }, borderRadius: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0px 10px', width: '30px' }}>
           <ArrowForwardIosIcon className="scroll-icon" sx={{ color: 'black', fontSize: '2rem', zIndex: 2 }} />
         </Grid>
       </Grid>
     </Container>
-    </div>
+    </>
   );
 };
 

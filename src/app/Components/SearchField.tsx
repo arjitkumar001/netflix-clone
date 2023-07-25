@@ -3,7 +3,6 @@ import { IconButton, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Grid from '@mui/material/Grid';
-
 import Box from '@mui/material/Box';
 import SignIn from './SignIn';
 
@@ -45,7 +44,7 @@ const SearchBar = () => {
           {isSearchOpen && (
             <TextField
               sx={{
-                border: '2px solid #00ffff',
+                border: '2px solid #ffff',
                 '& .MuiInputBase-input': {
                   color: 'white', // Set the text color
                 },
@@ -72,7 +71,9 @@ const SearchBar = () => {
         </Grid>
       </Grid>
       <NotificationsIcon onClick={() => alertMessage()} sx={{ fontSize: "2rem", color: "white", display: { xs: 'none', md: 'flex' } }} titleAccess='Notification' />
+
       <SignIn />
+
     </Box>
   );
 };

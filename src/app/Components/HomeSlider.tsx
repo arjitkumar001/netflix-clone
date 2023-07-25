@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Carousel as CarouselComponent } from 'react-responsive-carousel';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Typography, Box, Grid } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -15,104 +15,131 @@ import Modal from '@mui/material/Modal';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import ReactPlayer from 'react-player';
 import PauseIcon from '@mui/icons-material/Pause';
-import axios from 'axios';
+interface MovieData {
+    id: number;
+    title: string;
+    release_date: string;
+    original_language: string;
+    vote_average: number;
+    overview: string
+    backdrop_path: string
+}
+const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    width: "50%",
+    transform: 'translate(-50%, -50%)',
+    bgcolor: '#171717',
+  };
 
 
-interface Movie {
-  id: number;
-  title: string;
-  backdrop_path: string;
-  vote_average: number;
-  release_date: string;
-  overview: string
-  original_language: string
-}const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  width: "50%",
-  transform: 'translate(-50%, -50%)',
-  bgcolor: '#171717',
-};
-const youtube = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  fontSize: "100px",
-  fill: "red"
+const overlayStyle: React.CSSProperties = {
+    position: 'absolute',
+    bottom: '100px',
+    left: '20px',
+    maxWidth: '70%',
 };
 
-const Carousel = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [displayedMovies, setDisplayedMovies] = useState<Movie[]>([]);
-  const [open, setOpen] = useState(false);
-  const [selectedTvShow, setSelectedTvShow] = useState<Movie | null>(null);
-  const [videoData, setVideoData] = useState<any | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
+const ImageChangeComponent: React.FC = () => {
+    const [movieData, setMovieData] = useState<MovieData | null>(null);
+    const [movies, setMovies] = useState<MovieData[]>([]);
+    const [open, setOpen] = useState(false);
+    const [selectedTvShow, setSelectedTvShow] = useState<MovieData | null>(null);
+    const [videoData, setVideoData] = useState<any | null>(null);
+    const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const [isMuted, setIsMuted] = useState<boolean>(false);
+    const [displayedMovies, setDisplayedMovies] = useState<MovieData[]>([]);
+   
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await fetch(
-          'https://api.themoviedb.org/3/movie/now_playing?api_key=70832fbf4e20b8e11a44971719bde149'
-        );
-        const data = await response.json();
-        setMovies(data.results);
-      } catch (error) {
-        console.error('Error fetching movies:', error);
-      }
+
+    const mainDivStyle: React.CSSProperties = {
+        width: '100%',
+        height: '100vh',
+        backgroundImage: movieData
+            ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url(https://image.tmdb.org/t/p/original${movieData.backdrop_path})`
+            : '',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'white',
+        fontSize: '24px',
+        position: 'relative',
     };
 
-    fetchMovies();
-  }, []);
-  useEffect(() => {
-    // Fetch video data for each movie when movies state changes
-    const fetchVideoData = async (id: number) => {
-      try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${id}/videos?api_key=70832fbf4e20b8e11a44971719bde149`
-        );
-        const videoKey = response.data.results[0]?.key;
-        if (videoKey) {
-          setVideoData((prevData: any) => ({
-            ...prevData,
-            [id]: videoKey,
-          }));
+
+    useEffect(() => {
+        fetchMovieData();
+    }, []);
+
+    const fetchMovieData = async () => {
+        try {
+            const apiKey = '70832fbf4e20b8e11a44971719bde149';
+            const response = await axios.get(
+                `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1`
+            );
+
+            if (response.data && response.data.results && response.data.results.length > 0) {
+                setMovies(response.data.results); // Update movies state with the array of MovieData
+                const randomIndex = Math.floor(Math.random() * response.data.results.length);
+                const movie: MovieData = response.data.results[randomIndex];
+                setMovieData(movie);
+              }
+        } catch (error) {
+            console.error('Error fetching movie data from TMDB API:', error);
         }
-      } catch (error) {
-        console.error('Error fetching video data:', error);
-      }
     };
 
-    movies.map((movie: Movie) => fetchVideoData(movie.id));
-  }, [movies]);
+    useEffect(() => {
+        // Fetch video data for each movie when movies state changes
+        const fetchVideoData = async (id: number) => {
+          try {
+            const response = await axios.get(
+              `https://api.themoviedb.org/3/movie/${id}/videos?api_key=70832fbf4e20b8e11a44971719bde149`
+            );
+            const videoKey = response.data.results[0]?.key;
+            if (videoKey) {
+              setVideoData((prevData: any) => ({
+                ...prevData,
+                [id]: videoKey,
+              }));
+            }
+          } catch (error) {
+            console.error('Error fetching video data:', error);
+          }
+        };
+    
+        movies.map((movie: MovieData) => fetchVideoData(movie.id));
+      }, [movieData]);
+    
+    useEffect(() => {
+        setDisplayedMovies(movies);
+    }, [movieData]);
+    const handleOpen = (tvShow: MovieData) => {
+        setSelectedTvShow(tvShow);
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+        setSelectedTvShow(null);
+    };
+    const handlePlayVideo = () => {
+        setIsPlaying((prevState) => !prevState);
+    };
+    const handleMute = () => {
+        setIsMuted((prevIsMuted) => !prevIsMuted);
+    };
 
 
-  useEffect(() => {
-    setDisplayedMovies(movies);
-  }, [movies]);
-  const handleOpen = (tvShow: Movie) => {
-    setSelectedTvShow(tvShow);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    setSelectedTvShow(null);
-  };
-  const handlePlayVideo = () => {
-    setIsPlaying((prevState) => !prevState);
-  };
-  const handleMute = () => {
-    setIsMuted((prevIsMuted) => !prevIsMuted);
-  };
 
 
-  return (
-    <Box>
-      {selectedTvShow && (
+    return (
+        <Box sx={{...mainDivStyle,height:{sm:"60vh",xs:"50vh",md:"80vh",lg:"100vh"}}}>
+             {selectedTvShow && (
         <Modal
           open={open}
           onClose={handleClose}
@@ -125,7 +152,6 @@ const Carousel = () => {
                   playing={isPlaying}
                   controls={false}
                   muted={isMuted}
-                  autoplay={false}
                   style={{ opacity: ".5", }}
                   url={`https://www.youtube.com/watch?v=${videoData[selectedTvShow.id]}`}
                   width="100%"
@@ -190,51 +216,19 @@ const Carousel = () => {
 
         </Modal>
       )}
-      {displayedMovies.length > 0 ? (
-        <CarouselComponent showThumbs={false}>
-          {displayedMovies.slice(10, 15).map((movie) => (
-            <Box key={movie.id} sx={{ width: "100%" }}>
-              {movie.backdrop_path && (
-                <img
-                  className='slider-img'
-                  src={`http://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
-                  alt={movie.title + " image"}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    objectPosition:"center",
-                    opacity: "0.3",
-                  }}
-                  loading='lazy'
-                />
-              )}
-              <Grid position={"absolute"} sx={{ bottom: { lg: "70px", md: "70px", sm: "50px", xs: "30px" }, marginTop: '-100px', textAlign: "justify", width: { sm: "80%", xs: "100%" }, paddingLeft: { sm: "30px", xs: "10px" }, paddingRight: { sm: "0px", xs: "10px" } }}>
-                <Typography
-                  sx={{
-                    color: 'white',
-                    fontWeight: 'bold',
-                    textTransform: 'uppercase',
-                    fontSize: { sm: '1.5rem', xs: '1rem', lg: '2.2rem' },
-                  }}
-                >
-                  {movie.title}
-                </Typography>
-                <Typography sx={{ fontSize: { sm: '16px', xs: '14px', }, }}><span style={{ color: "#7FFF00" }}>{movie.vote_average}%</span> <span style={{ color: "#ffff" }}>{movie.release_date}</span></Typography>
-                <Typography component={"p"} variant='body2' sx={{ color: "#ffff", fontSize: { sm: '16px', xs: '12px', },whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",width:"100%"  }}>{movie.overview}</Typography>
-                <Stack spacing={2} direction="row" marginTop={"10px"} sx={{ fontSize: { sm: '16px', xs: '14px', } }}>
-                  <Button onClick={() => handleOpen(movie)} variant="contained" sx={{ color: "#000", fontWeight: "bold", backgroundColor: "white", ":hover": { backgroundColor: "#2F4F4F" }, padding: { xs: "5px 10px", }, fontSize: { xs: "12px" }, textAlign: "center" }}><PlayArrowIcon /> Play</Button>
-                  <Button onClick={() => handleOpen(movie)} variant="outlined" sx={{ color: "white", border: "1px solid gray", padding: { xs: "5px 5px", }, fontSize: { xs: "12px" } }}><InfoOutlinedIcon /> More info</Button>
-                </Stack>
-              </Grid>
-            </Box>
-          ))}
-        </CarouselComponent>
-      ) : (
-        <Typography sx={{ marginTop: "70px" }}><LinearIndeterminate /></Typography>
-      )}
-    </Box>
-  );
+            {movieData && (
+                <Box sx={{...overlayStyle,bottom:{xs:"30px",sm:"50px",md:"100px",lg:"100px"}}}>
+                    <Typography  sx={{textTransform:"uppercase",fontSize:{xs:"28px",sm:"30px",md:"36px"}}}>{movieData.title}</Typography>
+                    <Typography style={{ color: "#7FFF00" }}> {movieData.vote_average}% {movieData.release_date} <span style={{ color: "black", textTransform: "uppercase", fontSize: "1rem", fontWeight: "bold", border: "2px solid black" }}>{movieData.original_language}</span></Typography>
+                    <Typography style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>{movieData.overview}</Typography>
+                    <Stack spacing={2} direction="row" marginTop={"10px"} sx={{ fontSize: { sm: '16px', xs: '14px', } }}>
+                        <Button onClick={() => handleOpen(movieData)} variant="contained" sx={{ color: "#000", fontWeight: "bold", backgroundColor: "white", ":hover": { backgroundColor: "#2F4F4F" }, padding: { xs: "5px 10px", }, fontSize: { xs: "12px" }, textAlign: "center" }}><PlayArrowIcon /> Play</Button>
+                        <Button onClick={() => handleOpen(movieData)} variant="outlined" sx={{ color: "white", border: "1px solid gray", padding: { xs: "5px 5px", }, fontSize: { xs: "12px" } ,":hover":{borderColor:"skyblue"}}}><InfoOutlinedIcon /> More info</Button>
+                    </Stack>
+                </Box>
+            )}
+        </Box>
+    );
 };
 
-export default Carousel;
+export default ImageChangeComponent;

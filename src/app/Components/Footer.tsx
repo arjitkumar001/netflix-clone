@@ -29,11 +29,11 @@ export default function RowAndColumnSpacing() {
         <Grid container rowSpacing={1}>
           <Grid item xs={6} sm={3} md={3} lg={3} >
             <Item sx={{ color: "gray", height: "250px", backgroundColor: "transparent", cursor: "pointer",rowGap:"10px" }}>
-              <Typography sx={{ textAlign: "right" }}>
+              <Typography sx={{ textAlign: "center", }}>
                 <FacebookIcon sx={{ ...style, ":hover": { color: "red" } }} />
                 <InstagramIcon sx={{ ...style, ":hover": { color: "red" } }} />
                 <TwitterIcon sx={{ ...style, ":hover": { color: "red" } }} />
-                <YouTubeIcon sx={{ ...style, ":hover": { color: "red" } }} />
+                <YouTubeIcon sx={{ ...style, ":hover": { color: "red" },marginRight:"0px" }} />
               </Typography>
               <Typography variant='body2'>
                 <Link href="#" className='footer-link'>Audio Description</Link>

@@ -20,6 +20,7 @@ import ReactPlayer from 'react-player';
 import PauseIcon from '@mui/icons-material/Pause';
 import axios from 'axios';
 
+
 interface movieData {
   id: number;
   poster_path: string;
@@ -120,8 +121,8 @@ export default function TrendingTv() {
   };
 
   return (
-    <div>
-      <Container maxWidth="xl">
+    <>
+    
         {/* Modal start here=================================== */}
         {selectedTvShow && (
         <Modal
@@ -201,6 +202,7 @@ export default function TrendingTv() {
 
         </Modal>
       )}
+        <Container maxWidth="xl">
         <Typography variant='h4' sx={{ color: 'gray', padding: '10px 20px', textTransform: 'uppercase', textAlign: 'justify', fontSize: { xs: "20px" } }}>
           New Movies
         </Typography>
@@ -235,6 +237,6 @@ export default function TrendingTv() {
           </Grid>
         </Grid>
       </Container>
-    </div>
+    </>
   );
 }

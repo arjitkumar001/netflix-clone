@@ -19,6 +19,7 @@ import ReactPlayer from 'react-player';
 import PauseIcon from '@mui/icons-material/Pause';
 import axios from 'axios';
 
+
 interface TMDBMovie {
   id: number;
   original_title: string
@@ -45,7 +46,7 @@ const youtube = {
   fontSize: "100px",
   fill: "red"
 };
-
+const isServer = typeof window === 'undefined';
 const TopRatedMovie: React.FC = () => {
   const [movies, setMovies] = useState<TMDBMovie[]>([]);
   const [open, setOpen] = useState(false);
@@ -54,6 +55,7 @@ const TopRatedMovie: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
 
+  
   useEffect(() => {
     async function TopratedmovieApi() {
       try {
@@ -126,8 +128,7 @@ const TopRatedMovie: React.FC = () => {
   };
 
   return (
-    <div>
-      <Container maxWidth="xl">
+    <>
         {/* Modal start here=================================== */}
         {selectedTvShow && (
         <Modal
@@ -174,9 +175,9 @@ const TopRatedMovie: React.FC = () => {
                 <Typography onClick={handleMute}>
                   {
                     isMuted ? (
-                      <VolumeOffOutlinedIcon sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '20px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.3rem' }, backgroundColor: 'transparent', border: '2px solid gray', borderRadius: '10px', ':hover': { color: 'darkgray' } }} />
+                      <VolumeOffOutlinedIcon titleAccess='Mute' sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '20px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.3rem' }, backgroundColor: 'transparent', border: '2px solid gray', borderRadius: '10px', ':hover': { color: 'darkgray' } }} />
                     ) : (
-                      <VolumeUpIcon sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '20px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.3rem' }, backgroundColor: 'transparent', border: '2px solid gray', borderRadius: '10px', ':hover': { color: 'darkgray' } }} />
+                      <VolumeUpIcon titleAccess='Unmute' sx={{ position: 'absolute', bottom: { xs: '15px', sm: '15px', md: '10px', lg: '8px' }, right: '20px', fontWeight: '400', color: 'white', cursor: 'pointer', fontSize: { xs: '2rem', sm: '2rem', md: '2.3rem' }, backgroundColor: 'transparent', border: '2px solid gray', borderRadius: '10px', ':hover': { color: 'darkgray' } }} />
                     )
                   }
                 </Typography>
@@ -207,19 +208,20 @@ const TopRatedMovie: React.FC = () => {
 
         </Modal>
       )}
+      <Container maxWidth="xl">
         <Typography variant='h4' sx={{ color: "gray", padding: "10px 20px", textTransform: "uppercase", textAlign: "justify", fontSize: { xs: "20px" } }}>Top Rated </Typography>
         <Grid
           ref={containerRef}
           className='scroll-btn'
           sx={{ display: "flex", overflowX: "scroll", "&::-webkit-scrollbar": { display: "none" }, position: "relative" }}
         >
-          <Grid className='scroll-button' onClick={() => handleScrollLeft()} sx={{ position: 'sticky', top: 0, left: 0, zIndex: 1, ":hover": { backgroundColor: "black", opacity: "0.3" }, borderRadius: "none", display: "flex", justifyContent: "center", alignItems: "center", padding: "0px 10px", width: "30px" }}>
+          <Grid item xs={12} className='scroll-button' onClick={() => handleScrollLeft()} sx={{ position: 'sticky', top: 0, left: 0, zIndex: 1, ":hover": { backgroundColor: "black", opacity: "0.3" }, borderRadius: "none", display: "flex", justifyContent: "center", alignItems: "center", padding: "0px 10px", width: "30px" }}>
             <ArrowBackIosIcon className='scroll-icon' sx={{ marginLeft: "10px", color: "black", fontSize: "2rem", zIndex: 2, }} />
           </Grid>
           {
             movies.map((movie) => {
               return (
-                <Grid container key={movie.id} sx={{ cursor: "pointer", }}>
+                <Grid  key={movie.id} sx={{ cursor: "pointer", }}>
                   <Grid sx={{ width: "250px", height: "350px", columnGap: "10px", textAlign: "center", padding: "0px 2px", overflow: "hidden" }}>
                     <img
                       onClick={() => handleOpen(movie)}
@@ -240,7 +242,7 @@ const TopRatedMovie: React.FC = () => {
           </Grid>
         </Grid>
       </Container>
-    </div>
+    </>
   );
 };
 

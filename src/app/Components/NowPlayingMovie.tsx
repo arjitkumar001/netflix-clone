@@ -21,6 +21,7 @@ import PauseIcon from '@mui/icons-material/Pause';
 import axios from 'axios';
 
 
+
 interface movieData {
   id: number;
   poster_path: string;
@@ -121,8 +122,9 @@ export default function NowPlaingMovie() {
 
 
   return (
-    <div style={{ paddingTop: "70px" }}>
-      <Container maxWidth="xl">
+    < >
+      <Box sx={{ paddingTop: "70px" }}>
+     
         {/* Modal start here=================================== */}
         {selectedTvShow && (
         <Modal
@@ -202,6 +204,7 @@ export default function NowPlaingMovie() {
 
         </Modal>
       )}
+       <Container maxWidth="xl">
         <Typography variant='h4' sx={{ color: 'gray', padding: '10px 20px', textTransform: 'uppercase', textAlign: 'justify', fontSize: { xs: "20px" } }}>
           Now Playing
         </Typography>
@@ -210,7 +213,7 @@ export default function NowPlaingMovie() {
           className='scroll-btn'
           sx={{ display: 'flex', overflowX: 'scroll', '&::-webkit-scrollbar': { display: 'none' }, position: "relative" }}
         >
-          <Grid className='scroll-button' onClick={() => handleScrollLeft()} sx={{ position: 'sticky', top: 0, left: 0, zIndex: 1, ":hover": { backgroundColor: "black", opacity: "0.3" }, borderRadius: "none", display: "flex", justifyContent: "center", alignItems: "center", padding: "0px 10px", width: "30px" }}>
+          <Grid  className='scroll-button' onClick={() => handleScrollLeft()} sx={{ position: 'sticky', top: 0, left: 0, zIndex: 1, ":hover": { backgroundColor: "black", opacity: "0.3" }, borderRadius: "none", display: "flex", justifyContent: "center", alignItems: "center", padding: "0px 10px", width: "30px" }}>
             <ArrowBackIosIcon className='scroll-icon' sx={{ marginLeft: "10px", color: "black", fontSize: "2rem", zIndex: 2, }} />
           </Grid>
           {movie.map((tv) => (
@@ -236,6 +239,7 @@ export default function NowPlaingMovie() {
           </Grid>
         </Grid>
       </Container>
-    </div>
+      </Box>
+    </>
   );
 }
