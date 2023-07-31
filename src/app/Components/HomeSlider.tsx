@@ -6,7 +6,6 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import LinearIndeterminate from '@/app/Components/ProgressBar/Progressbar';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
@@ -15,6 +14,7 @@ import Modal from '@mui/material/Modal';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import ReactPlayer from 'react-player';
 import PauseIcon from '@mui/icons-material/Pause';
+import UpcomingMovie from './UpcomingMovie';
 interface MovieData {
     id: number;
     title: string;
@@ -36,9 +36,8 @@ const style = {
 
 const overlayStyle: React.CSSProperties = {
     position: 'absolute',
-    bottom: '100px',
-    left: '20px',
-    maxWidth: '70%',
+    bottom: '0px',
+    maxWidth: '100%',
 };
 
 const ImageChangeComponent: React.FC = () => {
@@ -49,7 +48,7 @@ const ImageChangeComponent: React.FC = () => {
     const [videoData, setVideoData] = useState<any | null>(null);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [isMuted, setIsMuted] = useState<boolean>(false);
-    const [displayedMovies, setDisplayedMovies] = useState<MovieData[]>([]);
+ 
    
 
 
@@ -57,8 +56,8 @@ const ImageChangeComponent: React.FC = () => {
         width: '100%',
         height: '100vh',
         backgroundImage: movieData
-            ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url(https://image.tmdb.org/t/p/original${movieData.backdrop_path})`
-            : '',
+        ? `linear-gradient(to top, rgba(23,23,23,1), rgba(23, 23, 23, 0.6),rgba(0, 0, 0, 0.0)), url(https://image.tmdb.org/t/p/original${movieData.backdrop_path})`
+        : '',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -115,9 +114,7 @@ const ImageChangeComponent: React.FC = () => {
         movies.map((movie: MovieData) => fetchVideoData(movie.id));
       }, [movieData]);
     
-    useEffect(() => {
-        setDisplayedMovies(movies);
-    }, [movieData]);
+   
     const handleOpen = (tvShow: MovieData) => {
         setSelectedTvShow(tvShow);
         setOpen(true);
@@ -138,7 +135,7 @@ const ImageChangeComponent: React.FC = () => {
 
 
     return (
-        <Box sx={{...mainDivStyle,height:{sm:"60vh",xs:"50vh",md:"80vh",lg:"100vh"}}}>
+        <Box sx={{...mainDivStyle}}>
              {selectedTvShow && (
         <Modal
           open={open}
@@ -213,11 +210,11 @@ const ImageChangeComponent: React.FC = () => {
               </Grid>
             </Grid>
           </Box>
-
         </Modal>
       )}
             {movieData && (
-                <Box sx={{...overlayStyle,bottom:{xs:"30px",sm:"50px",md:"100px",lg:"100px"}}}>
+              <Box sx={{...overlayStyle,}}>
+                <Box sx={{marginLeft:"50px",maxWidth:"70%"}}>
                     <Typography  sx={{textTransform:"uppercase",fontSize:{xs:"28px",sm:"30px",md:"36px"}}}>{movieData.title}</Typography>
                     <Typography style={{ color: "#7FFF00" }}> {movieData.vote_average}% {movieData.release_date} <span style={{ color: "black", textTransform: "uppercase", fontSize: "1rem", fontWeight: "bold", border: "2px solid black" }}>{movieData.original_language}</span></Typography>
                     <Typography style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>{movieData.overview}</Typography>
@@ -225,6 +222,9 @@ const ImageChangeComponent: React.FC = () => {
                         <Button onClick={() => handleOpen(movieData)} variant="contained" sx={{ color: "#000", fontWeight: "bold", backgroundColor: "white", ":hover": { backgroundColor: "#2F4F4F" }, padding: { xs: "5px 10px", }, fontSize: { xs: "12px" }, textAlign: "center" }}><PlayArrowIcon /> Play</Button>
                         <Button onClick={() => handleOpen(movieData)} variant="outlined" sx={{ color: "white", border: "1px solid gray", padding: { xs: "5px 5px", }, fontSize: { xs: "12px" } ,":hover":{borderColor:"skyblue"}}}><InfoOutlinedIcon /> More info</Button>
                     </Stack>
+                    
+                </Box>
+                <UpcomingMovie/>
                 </Box>
             )}
         </Box>

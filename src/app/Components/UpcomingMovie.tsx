@@ -206,8 +206,8 @@ const UpcomingMovie: React.FC = () => {
 
         </Modal>
       )}
-       <Container maxWidth="xl" sx={{marginTop:""}}>
-      <Typography variant="h4" sx={{ color: 'gray', padding: '10px 20px', textTransform: 'uppercase', textAlign: 'justify', fontSize: { xs: '20px' } }}>
+       <Container maxWidth="xl" sx={{}}>
+      <Typography variant="h4" sx={{opacity:"", color: 'gray', padding: '10px 20px', textTransform: 'uppercase', textAlign: 'justify', fontSize: { xs: '20px' } }}>
         Up Coming
       </Typography>
       <Grid
