@@ -123,8 +123,9 @@
   .model-body {
     text-align: center;
     width: 100%;
-    padding: 5px;
+   
   }
+ 
 
   .tvshow-mod-img {
     height: 350px;
@@ -155,3 +156,26 @@
     height: auto;
   }
 }
+@media screen and (max-width:300px) {
+  .model-body {
+    text-align: center;
+    width: 100%;
+    top: 20%;
+  }
+  .youtube-screen{
+    height: 100%;
+    width: 100%;
+  }
+  }
+
+  @media screen and (max-width:200px) {
+    .model-body {
+      text-align: center;
+      width: 100%;
+      top: 20%;
+    }
+    .youtube-screen{
+      height: 100%;
+      width: 100%;
+    }
+    }
