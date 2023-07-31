@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -200,8 +201,8 @@ const ImageChangeComponent: React.FC = () => {
                   <Typography sx={{ fontSize: { xs: '14px', sm: '16px', md: '20px' }, color: '#7FFF00' }}>
                     {selectedTvShow.release_date}
                   </Typography>
-                  <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '12px' }, border: '1px solid white', borderRadius: '3px', padding: '5px 7px', textTransform: 'uppercase' }}>
-                    {selectedTvShow.original_language}
+                  <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '12px' }, borderRadius: '3px', padding: '5px 7px', textTransform: 'uppercase',color:"brown" }}>
+                  <span style={{ border: '1px solid white',padding:"3px 5px"}}>  {selectedTvShow.original_language}</span>
                   </Typography>
                 </Grid>
                 <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '14px' },whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",width:"100%"}}>
@@ -216,7 +217,7 @@ const ImageChangeComponent: React.FC = () => {
               <Box sx={{...overlayStyle,}}>
                 <Box sx={{marginLeft:"50px",maxWidth:"70%"}}>
                     <Typography  sx={{textTransform:"uppercase",fontSize:{xs:"28px",sm:"30px",md:"36px"}}}>{movieData.title}</Typography>
-                    <Typography style={{ color: "#7FFF00" }}> {movieData.vote_average}% {movieData.release_date} <span style={{ color: "black", textTransform: "uppercase", fontSize: "1rem", fontWeight: "bold", border: "2px solid black" }}>{movieData.original_language}</span></Typography>
+                    <Typography style={{ color: "#7FFF00" }}> {movieData.vote_average}% {movieData.release_date}  <span style={{ border: '2px solid black',padding:"2px 5px",color:"black",textTransform:"uppercase",fontWeight:"bolder"}}> {movieData.original_language}</span></Typography>
                     <Typography style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>{movieData.overview}</Typography>
                     <Stack spacing={2} direction="row" marginTop={"10px"} sx={{ fontSize: { sm: '16px', xs: '14px', } }}>
                         <Button onClick={() => handleOpen(movieData)} variant="contained" sx={{ color: "#000", fontWeight: "bold", backgroundColor: "white", ":hover": { backgroundColor: "#2F4F4F" }, padding: { xs: "5px 10px", }, fontSize: { xs: "12px" }, textAlign: "center" }}><PlayArrowIcon /> Play</Button>

@@ -191,8 +191,8 @@ export default function NewAndRecentlyMovie() {
                   <Typography sx={{ fontSize: { xs: '14px', sm: '16px', md: '20px' }, color: '#7FFF00' }}>
                     {selectedTvShow.release_date}
                   </Typography>
-                  <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '12px' }, border: '1px solid white', borderRadius: '3px', padding: '5px 7px', textTransform: 'uppercase' }}>
-                    {selectedTvShow.original_language}
+                  <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '12px' }, borderRadius: '3px', padding: '5px 7px', textTransform: 'uppercase' }}>
+                  <span style={{ border: '1px solid white',padding:"3px 5px"}}>  {selectedTvShow.original_language}</span>
                   </Typography>
                 </Grid>
                 <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '14px' } }}>
