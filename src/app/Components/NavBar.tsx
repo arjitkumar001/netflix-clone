@@ -54,7 +54,7 @@ function NavBar() {
     }, []);
 
     return (
-        <AppBar position="fixed" sx={{ backgroundColor: { lg: scrollColor, md: scrollColor, sm: '#171717', xs: '#171717' }, boxShadow: "none", height: "70px" }}>
+        <AppBar position="fixed" sx={{ backgroundColor: { lg: scrollColor, md: '#171717', sm: '#171717', xs: '#171717' }, boxShadow: "none", height: "70px" }}>
             <Container maxWidth="xl">
                 <Toolbar >
                     <Grid

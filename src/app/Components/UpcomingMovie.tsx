@@ -141,7 +141,7 @@ const UpcomingMovie: React.FC = () => {
                   style={{ opacity: ".5"}}
                   url={`https://www.youtube.com/watch?v=${videoData[selectedTvShow.id]}`}
                   width="100%"
-                  height={500}
+                  sx={{height:{xs:"100%",sm:"500px"}}}
                   config={{
                     youtube: {
                       playerVars: {
@@ -197,7 +197,7 @@ const UpcomingMovie: React.FC = () => {
                   <span style={{ border: '1px solid white',padding:"3px 5px"}}>  {selectedTvShow.original_language}</span>
                   </Typography>
                 </Grid>
-                <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '14px' } }}>
+                <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '14px' }, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>
                   {selectedTvShow.overview}
                 </Typography>
               </Grid>
@@ -220,13 +220,13 @@ const UpcomingMovie: React.FC = () => {
         </Grid>
         {movies.map((movie) => (
           <Grid key={movie.id} sx={{ cursor: 'pointer' }}>
-            <Grid item xs={12} sx={{ width: '250px', height: '350px', textAlign: 'center', padding: '0px 5px', overflow: 'hidden',display:"flex" }}>
+            <Grid item xs={12} sx={{ width:{xs:"250px",sm:"250px"}, height:{xs:"150px",sm:"150px",md:"350px"}, textAlign: 'center', padding:{xs:"0px 1px",sm:"0px 2px"}, overflow: 'hidden',display:"flex" }}>
               <img
                 onClick={() => handleOpen(movie)}
                 className="home-Img"
                 src={'http://image.tmdb.org/t/p/w500' + movie.poster_path}
                 alt=""
-                height="auto"
+                height="100%"
                 width="100%"
                 loading="eager"
               />
