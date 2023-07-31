@@ -27,9 +27,9 @@ interface MovieData {
 }
 const style = {
   position: 'absolute' as 'absolute',
-  top: '50%',
   left: '50%',
-  width: "80%",
+  top: "50%",
+  width: "60%",
   transform: 'translate(-50%, -50%)',
   bgcolor: '#171717',
 };
@@ -141,19 +141,19 @@ const ImageChangeComponent: React.FC = () => {
         <Modal
           open={open}
           onClose={handleClose}
-          sx={{ backgroundColor: 'rgba(23, 23, 23,0.8)' }}
+          sx={{ backgroundColor: 'rgba(23, 23, 23,0.8)', height: "100%" }}
         >
           <Box className="model-body" sx={{ ...style, display: 'flex', flexDirection: 'column', }}>
-            <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: 'center', width: '100%', position: 'relative', cursor: 'pointer' }}>
+            <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: 'center', width: '100%', height: "100%", position: 'relative', cursor: 'pointer' }}>
               {selectedTvShow && videoData[selectedTvShow.id] && (
                 <ReactPlayer
-                className="youtube-screen"
+                  className="youtube-screen"
                   playing={isPlaying}
                   controls={false}
                   muted={isMuted}
                   style={{ opacity: ".5", }}
                   url={`https://www.youtube.com/watch?v=${videoData[selectedTvShow.id]}`}
-                  height={500}
+                  sx={{ height: { xs: "100%", sm: "500px" } }}
                   width="100%"
                   config={{
                     youtube: {
@@ -171,10 +171,10 @@ const ImageChangeComponent: React.FC = () => {
                 <Typography onClick={handlePlayVideo} display={"inline"} sx={{ position: "absolute", bottom: "10px", left: "20px", }}>
                   {
                     isPlaying ? (
-                      <Button sx={{ color: "black", background: "white", fontWeight: "bold", border: "2px solid black", outline: "2px solid white", textTransform: "capitalize", ":hover": { background: "darkgray" } }}><PauseIcon />Pause</Button>
+                      <Button sx={{ color: "black", background: "white", fontWeight: "bolder", border: "2px solid black", outline: "2px solid white", textTransform: "capitalize", ":hover": { background: "darkgray" } }}><PauseIcon />Pause</Button>
                     ) :
                       (
-                        <Button sx={{ color: "black", background: "white", fontWeight: "bold", border: "2px solid black", outline: "2px solid white", textTransform: "capitalize", ":hover": { background: "darkgray" } }}><PlayArrowIcon />Play</Button>
+                        <Button sx={{ color: "black", background: "white", fontWeight: "bolder", border: "2px solid black", outline: "2px solid white", textTransform: "capitalize", ":hover": { background: "darkgray" } }}><PlayArrowIcon />Play</Button>
                       )
                   }
                 </Typography>
@@ -216,7 +216,7 @@ const ImageChangeComponent: React.FC = () => {
       )}
       {movieData && (
         <Box sx={{ ...overlayStyle, }}>
-          <Box sx={{ marginLeft: "50px", maxWidth: "70%" }}>
+          <Box sx={{ marginLeft: { xs: "10px", sm: "50px" }, maxWidth: "70%" }}>
             <Typography sx={{ textTransform: "uppercase", fontSize: { xs: "28px", sm: "30px", md: "36px" } }}>{movieData.title}</Typography>
             <Typography style={{ color: "#7FFF00" }}> {movieData.vote_average}% {movieData.release_date}  <span style={{ border: '2px solid black', padding: "2px 5px", color: "black", textTransform: "uppercase", fontWeight: "bolder" }}> {movieData.original_language}</span></Typography>
             <Typography style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>{movieData.overview}</Typography>

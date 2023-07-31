@@ -68,6 +68,7 @@
   color: #3b3bf3;
 }
 
+
 @media screen and (max-width:992px) {
   .tvshow-mod-img {
     width: auto;
@@ -160,7 +161,6 @@
   .model-body {
     text-align: center;
     width: 100%;
-    top: 20%;
   }
   .youtube-screen{
     height: 100%;
@@ -172,7 +172,6 @@
     .model-body {
       text-align: center;
       width: 100%;
-      top: 20%;
     }
     .youtube-screen{
       height: 100%;
