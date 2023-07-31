@@ -17,143 +17,144 @@ import ReactPlayer from 'react-player';
 import PauseIcon from '@mui/icons-material/Pause';
 import UpcomingMovie from './UpcomingMovie';
 interface MovieData {
-    id: number;
-    title: string;
-    release_date: string;
-    original_language: string;
-    vote_average: number;
-    overview: string
-    backdrop_path: string
+  id: number;
+  title: string;
+  release_date: string;
+  original_language: string;
+  vote_average: number;
+  overview: string
+  backdrop_path: string
 }
 const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    width: "50%",
-    transform: 'translate(-50%, -50%)',
-    bgcolor: '#171717',
-  };
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  width: "80%",
+  transform: 'translate(-50%, -50%)',
+  bgcolor: '#171717',
+};
 
 
 const overlayStyle: React.CSSProperties = {
-    position: 'absolute',
-    bottom: '0px',
-    maxWidth: '100%',
+  position: 'absolute',
+  bottom: '0px',
+  maxWidth: '100%',
 };
 
 const ImageChangeComponent: React.FC = () => {
-    const [movieData, setMovieData] = useState<MovieData | null>(null);
-    const [movies, setMovies] = useState<MovieData[]>([]);
-    const [open, setOpen] = useState(false);
-    const [selectedTvShow, setSelectedTvShow] = useState<MovieData | null>(null);
-    const [videoData, setVideoData] = useState<any | null>(null);
-    const [isPlaying, setIsPlaying] = useState<boolean>(false);
-    const [isMuted, setIsMuted] = useState<boolean>(false);
- 
-   
+  const [movieData, setMovieData] = useState<MovieData | null>(null);
+  const [movies, setMovies] = useState<MovieData[]>([]);
+  const [open, setOpen] = useState(false);
+  const [selectedTvShow, setSelectedTvShow] = useState<MovieData | null>(null);
+  const [videoData, setVideoData] = useState<any | null>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(false);
 
 
-    const mainDivStyle: React.CSSProperties = {
-        width: '100%',
-        height: '100vh',
-        backgroundImage: movieData
-        ? `linear-gradient(to top, rgba(23,23,23,1), rgba(23, 23, 23, 0.6),rgba(0, 0, 0, 0.0)), url(https://image.tmdb.org/t/p/original${movieData.backdrop_path})`
-        : '',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        color: 'white',
-        fontSize: '24px',
-        position: 'relative',
-    };
 
 
-    useEffect(() => {
-        fetchMovieData();
-    }, []);
+  const mainDivStyle: React.CSSProperties = {
+    width: '100%',
+    height: '100vh',
+    backgroundImage: movieData
+      ? `linear-gradient(to top, rgba(23,23,23,1), rgba(23, 23, 23, 0.6),rgba(0, 0, 0, 0.0)), url(https://image.tmdb.org/t/p/original${movieData.backdrop_path})`
+      : '',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'white',
+    fontSize: '24px',
+    position: 'relative',
+  };
 
-    const fetchMovieData = async () => {
-        try {
-            const apiKey = '70832fbf4e20b8e11a44971719bde149';
-            const response = await axios.get(
-                `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1`
-            );
 
-            if (response.data && response.data.results && response.data.results.length > 0) {
-                setMovies(response.data.results); // Update movies state with the array of MovieData
-                const randomIndex = Math.floor(Math.random() * response.data.results.length);
-                const movie: MovieData = response.data.results[randomIndex];
-                setMovieData(movie);
-              }
-        } catch (error) {
-            console.error('Error fetching movie data from TMDB API:', error);
+  useEffect(() => {
+    fetchMovieData();
+  }, []);
+
+  const fetchMovieData = async () => {
+    try {
+      const apiKey = '70832fbf4e20b8e11a44971719bde149';
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1`
+      );
+
+      if (response.data && response.data.results && response.data.results.length > 0) {
+        setMovies(response.data.results); // Update movies state with the array of MovieData
+        const randomIndex = Math.floor(Math.random() * response.data.results.length);
+        const movie: MovieData = response.data.results[randomIndex];
+        setMovieData(movie);
+      }
+    } catch (error) {
+      console.error('Error fetching movie data from TMDB API:', error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch video data for each movie when movies state changes
+    const fetchVideoData = async (id: number) => {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/${id}/videos?api_key=70832fbf4e20b8e11a44971719bde149`
+        );
+        const videoKey = response.data.results[0]?.key;
+        if (videoKey) {
+          setVideoData((prevData: any) => ({
+            ...prevData,
+            [id]: videoKey,
+          }));
         }
+      } catch (error) {
+        console.error('Error fetching video data:', error);
+      }
     };
 
-    useEffect(() => {
-        // Fetch video data for each movie when movies state changes
-        const fetchVideoData = async (id: number) => {
-          try {
-            const response = await axios.get(
-              `https://api.themoviedb.org/3/movie/${id}/videos?api_key=70832fbf4e20b8e11a44971719bde149`
-            );
-            const videoKey = response.data.results[0]?.key;
-            if (videoKey) {
-              setVideoData((prevData: any) => ({
-                ...prevData,
-                [id]: videoKey,
-              }));
-            }
-          } catch (error) {
-            console.error('Error fetching video data:', error);
-          }
-        };
-    
-        movies.map((movie: MovieData) => fetchVideoData(movie.id));
-      }, [movieData]);
-    
-   
-    const handleOpen = (tvShow: MovieData) => {
-        setSelectedTvShow(tvShow);
-        setOpen(true);
-    };
+    movies.map((movie: MovieData) => fetchVideoData(movie.id));
+  }, [movieData]);
 
-    const handleClose = () => {
-        setOpen(false);
-        setSelectedTvShow(null);
-    };
-    const handlePlayVideo = () => {
-        setIsPlaying((prevState) => !prevState);
-    };
-    const handleMute = () => {
-        setIsMuted((prevIsMuted) => !prevIsMuted);
-    };
+
+  const handleOpen = (tvShow: MovieData) => {
+    setSelectedTvShow(tvShow);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedTvShow(null);
+  };
+  const handlePlayVideo = () => {
+    setIsPlaying((prevState) => !prevState);
+  };
+  const handleMute = () => {
+    setIsMuted((prevIsMuted) => !prevIsMuted);
+  };
 
 
 
 
-    return (
-        <Box sx={{...mainDivStyle}}>
-             {selectedTvShow && (
+  return (
+    <Box sx={{ ...mainDivStyle }}>
+      {selectedTvShow && (
         <Modal
           open={open}
           onClose={handleClose}
           sx={{ backgroundColor: 'rgba(23, 23, 23,0.8)' }}
         >
-          <Box className="model-body" sx={{ ...style, display: 'flex', flexDirection: 'column' }}>
+          <Box className="model-body" sx={{ ...style, display: 'flex', flexDirection: 'column', }}>
             <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: 'center', width: '100%', position: 'relative', cursor: 'pointer' }}>
               {selectedTvShow && videoData[selectedTvShow.id] && (
                 <ReactPlayer
+                className="youtube-screen"
                   playing={isPlaying}
                   controls={false}
                   muted={isMuted}
                   style={{ opacity: ".5", }}
                   url={`https://www.youtube.com/watch?v=${videoData[selectedTvShow.id]}`}
-                  width="100%"
                   height={500}
+                  width="100%"
                   config={{
                     youtube: {
                       playerVars: { showinfo: 0, disablekb: 1 },
@@ -201,11 +202,11 @@ const ImageChangeComponent: React.FC = () => {
                   <Typography sx={{ fontSize: { xs: '14px', sm: '16px', md: '20px' }, color: '#7FFF00' }}>
                     {selectedTvShow.release_date}
                   </Typography>
-                  <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '12px' }, borderRadius: '3px', padding: '5px 7px', textTransform: 'uppercase',color:"brown" }}>
-                  <span style={{ border: '1px solid white',padding:"3px 5px"}}>  {selectedTvShow.original_language}</span>
+                  <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '12px' }, borderRadius: '3px', padding: '5px 7px', textTransform: 'uppercase', color: "brown" }}>
+                    <span style={{ border: '1px solid white', padding: "3px 5px" }}>  {selectedTvShow.original_language}</span>
                   </Typography>
                 </Grid>
-                <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '14px' },whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis",width:"100%"}}>
+                <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '14px' }, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>
                   {selectedTvShow.overview}
                 </Typography>
               </Grid>
@@ -213,23 +214,23 @@ const ImageChangeComponent: React.FC = () => {
           </Box>
         </Modal>
       )}
-            {movieData && (
-              <Box sx={{...overlayStyle,}}>
-                <Box sx={{marginLeft:"50px",maxWidth:"70%"}}>
-                    <Typography  sx={{textTransform:"uppercase",fontSize:{xs:"28px",sm:"30px",md:"36px"}}}>{movieData.title}</Typography>
-                    <Typography style={{ color: "#7FFF00" }}> {movieData.vote_average}% {movieData.release_date}  <span style={{ border: '2px solid black',padding:"2px 5px",color:"black",textTransform:"uppercase",fontWeight:"bolder"}}> {movieData.original_language}</span></Typography>
-                    <Typography style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>{movieData.overview}</Typography>
-                    <Stack spacing={2} direction="row" marginTop={"10px"} sx={{ fontSize: { sm: '16px', xs: '14px', } }}>
-                        <Button onClick={() => handleOpen(movieData)} variant="contained" sx={{ color: "#000", fontWeight: "bold", backgroundColor: "white", ":hover": { backgroundColor: "#2F4F4F" }, padding: { xs: "5px 10px", }, fontSize: { xs: "12px" }, textAlign: "center" }}><PlayArrowIcon /> Play</Button>
-                        <Button onClick={() => handleOpen(movieData)} variant="outlined" sx={{ color: "white", border: "1px solid gray", padding: { xs: "5px 5px", }, fontSize: { xs: "12px" } ,":hover":{borderColor:"skyblue"}}}><InfoOutlinedIcon /> More info</Button>
-                    </Stack>
-                    
-                </Box>
-                <UpcomingMovie/>
-                </Box>
-            )}
+      {movieData && (
+        <Box sx={{ ...overlayStyle, }}>
+          <Box sx={{ marginLeft: "50px", maxWidth: "70%" }}>
+            <Typography sx={{ textTransform: "uppercase", fontSize: { xs: "28px", sm: "30px", md: "36px" } }}>{movieData.title}</Typography>
+            <Typography style={{ color: "#7FFF00" }}> {movieData.vote_average}% {movieData.release_date}  <span style={{ border: '2px solid black', padding: "2px 5px", color: "black", textTransform: "uppercase", fontWeight: "bolder" }}> {movieData.original_language}</span></Typography>
+            <Typography style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>{movieData.overview}</Typography>
+            <Stack spacing={2} direction="row" marginTop={"10px"} sx={{ fontSize: { sm: '16px', xs: '14px', } }}>
+              <Button onClick={() => handleOpen(movieData)} variant="contained" sx={{ color: "#000", fontWeight: "bold", backgroundColor: "white", ":hover": { backgroundColor: "#2F4F4F" }, padding: { xs: "5px 10px", }, fontSize: { xs: "12px" }, textAlign: "center" }}><PlayArrowIcon /> Play</Button>
+              <Button onClick={() => handleOpen(movieData)} variant="outlined" sx={{ color: "white", border: "1px solid gray", padding: { xs: "5px 5px", }, fontSize: { xs: "12px" }, ":hover": { borderColor: "skyblue" } }}><InfoOutlinedIcon /> More info</Button>
+            </Stack>
+
+          </Box>
+          <UpcomingMovie />
         </Box>
-    );
+      )}
+    </Box>
+  );
 };
 
 export default ImageChangeComponent;

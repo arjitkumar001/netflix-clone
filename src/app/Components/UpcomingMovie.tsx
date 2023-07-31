@@ -134,10 +134,10 @@ const UpcomingMovie: React.FC = () => {
             <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: 'center', width: '100%', position: 'relative', cursor: 'pointer' }}>
               {selectedTvShow && videoData[selectedTvShow.id] && (
                 <ReactPlayer
+                className="youtube-screen"
                   playing={isPlaying}
                   controls={false}
                   muted={isMuted}
-                  autoplay={false}
                   style={{ opacity: ".5"}}
                   url={`https://www.youtube.com/watch?v=${videoData[selectedTvShow.id]}`}
                   width="100%"
