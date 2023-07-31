@@ -139,7 +139,6 @@ export default function NowPlaingMovie() {
                   playing={isPlaying}
                   controls={false}
                   muted={isMuted}
-                  autoplay={false}
                   style={{ opacity: ".5", }}
                   url={`https://www.youtube.com/watch?v=${videoData[selectedTvShow.id]}`}
                   width="100%"
