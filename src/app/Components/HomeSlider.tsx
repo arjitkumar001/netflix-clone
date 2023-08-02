@@ -29,7 +29,6 @@ const style = {
   position: 'absolute' as 'absolute',
   left: '50%',
   top: "50%",
-  width: "60%",
   transform: 'translate(-50%, -50%)',
   bgcolor: '#171717',
 };
@@ -37,8 +36,9 @@ const style = {
 
 const overlayStyle: React.CSSProperties = {
   position: 'absolute',
-  bottom: '0px',
+  bottom: '-100px',
   maxWidth: '100%',
+  paddingBottom:"100px"
 };
 
 const ImageChangeComponent: React.FC = () => {
@@ -141,9 +141,9 @@ const ImageChangeComponent: React.FC = () => {
         <Modal
           open={open}
           onClose={handleClose}
-          sx={{ backgroundColor: 'rgba(23, 23, 23,0.8)', height: "100%" }}
+          sx={{ backgroundColor: 'rgba(23, 23, 23,0.8)', }}
         >
-          <Box className="model-body" sx={{ ...style, display: 'flex', flexDirection: 'column', }}>
+          <Box className="model-body" sx={{ ...style, display: 'flex', flexDirection: 'column', width:{xs:"100%",sm:"100%",md:"60%",lg:"50%"}}}>
             <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: 'center', width: '100%', height: "100%", position: 'relative', cursor: 'pointer' }}>
               {selectedTvShow && videoData[selectedTvShow.id] && (
                 <ReactPlayer
@@ -154,6 +154,7 @@ const ImageChangeComponent: React.FC = () => {
                   style={{ opacity: ".5", }}
                   url={`https://www.youtube.com/watch?v=${videoData[selectedTvShow.id]}`}
                   sx={{ height: { xs: "100%", sm: "500px" } }}
+                  // height={500}
                   width="100%"
                   config={{
                     youtube: {
@@ -206,7 +207,7 @@ const ImageChangeComponent: React.FC = () => {
                     <span style={{ border: '1px solid white', padding: "3px 5px" }}>  {selectedTvShow.original_language}</span>
                   </Typography>
                 </Grid>
-                <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '14px' }, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>
+                <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '14px' } }}>
                   {selectedTvShow.overview}
                 </Typography>
               </Grid>

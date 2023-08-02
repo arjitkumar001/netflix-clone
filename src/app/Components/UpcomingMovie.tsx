@@ -30,7 +30,6 @@ const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
-  width: '50%',
   transform: 'translate(-50%, -50%)',
   bgcolor: '#171717',
 };
@@ -130,7 +129,7 @@ const UpcomingMovie: React.FC = () => {
           onClose={handleClose}
           sx={{ backgroundColor: 'rgba(23, 23, 23,0.8)' }}
         >
-          <Box className="model-body" sx={{ ...style, display: 'flex', flexDirection: 'column' }}>
+          <Box className="model-body" sx={{ ...style, display: 'flex', flexDirection: 'column' , width:{xs:"100%",sm:"100%",md:"60%",lg:"50%"}}}>
             <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: 'center', width: '100%', position: 'relative', cursor: 'pointer' }}>
               {selectedTvShow && videoData[selectedTvShow.id] && (
                 <ReactPlayer
@@ -197,7 +196,7 @@ const UpcomingMovie: React.FC = () => {
                   <span style={{ border: '1px solid white',padding:"3px 5px"}}>  {selectedTvShow.original_language}</span>
                   </Typography>
                 </Grid>
-                <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '14px' }, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>
+                <Typography sx={{ fontSize: { xs: '12px', sm: '12px', md: '14px' }, }}>
                   {selectedTvShow.overview}
                 </Typography>
               </Grid>
@@ -220,7 +219,7 @@ const UpcomingMovie: React.FC = () => {
         </Grid>
         {movies.map((movie) => (
           <Grid key={movie.id} sx={{ cursor: 'pointer' }}>
-            <Grid item xs={12} sx={{ width:{xs:"250px",sm:"250px"}, height:{xs:"150px",sm:"150px",md:"350px"}, textAlign: 'center', padding:{xs:"0px 1px",sm:"0px 2px"}, overflow: 'hidden',display:"flex" }}>
+            <Grid item xs={12} sx={{ width:"250px", height:"350px", textAlign: 'center', padding:{xs:"0px 1px",sm:"0px 2px"}, overflow: 'hidden',display:"flex" }}>
               <img
                 onClick={() => handleOpen(movie)}
                 className="home-Img"
