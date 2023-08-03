@@ -16,6 +16,7 @@ import PauseIcon from '@mui/icons-material/Pause';
 import axios from 'axios';
 
 
+
 interface TMDBMovie {
   id: number;
   title: string;
@@ -129,7 +130,7 @@ const UpcomingMovie: React.FC = () => {
           onClose={handleClose}
           sx={{ backgroundColor: 'rgba(23, 23, 23,0.8)' }}
         >
-          <Box className="model-body" sx={{ ...style, display: 'flex', flexDirection: 'column' , width:{xs:"100%",sm:"100%",md:"60%",lg:"50%"}}}>
+          <Box className="model-body" sx={{ ...style, display: 'flex', flexDirection: 'column', width:{xs:"100%",sm:"100%",md:"60%",lg:"50%"} }}>
             <Grid item xs={12} sm={12} md={6} lg={6} sx={{ alignItems: 'center', width: '100%', position: 'relative', cursor: 'pointer' }}>
               {selectedTvShow && videoData[selectedTvShow.id] && (
                 <ReactPlayer
@@ -212,14 +213,14 @@ const UpcomingMovie: React.FC = () => {
       <Grid
         ref={containerRef}
         className="scroll-btn"
-        sx={{ display: 'flex', overflowX: 'scroll', '&::-webkit-scrollbar': { display: 'none' }, position: 'relative' }}
+        sx={{ display: 'flex', overflowX: 'scroll', '&::-webkit-scrollbar': { display: 'none' }, position: 'relative'}}
       >
-        <Grid item xs={12} className="scroll-button" onClick={handleScrollLeft} sx={{ textAlign: 'center', position: 'sticky', top: 0, left: 0, zIndex: 1, ':hover': { backgroundColor: 'black', opacity: '0.3' }, borderRadius: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0px 10px', width: '30px' }}>
+        <Grid item xs={12} className="scroll-button" onClick={handleScrollLeft} sx={{ textAlign: 'center', position: 'sticky', top: 0, left: 0, zIndex: 1, ':hover': { backgroundColor: 'black', opacity: '0.3', }, borderRadius: 'none',display:"flex", justifyContent: 'center', alignItems: 'center', padding: '0px 10px', width: '30px' }}>
           <ArrowBackIosIcon className="scroll-icon" sx={{ color: 'black', fontSize: '2rem', zIndex: 2, marginLeft: '10px' }} />
         </Grid>
         {movies.map((movie) => (
-          <Grid key={movie.id} sx={{ cursor: 'pointer' }}>
-            <Grid item xs={12} sx={{ width:"250px", height:"350px", textAlign: 'center', padding:{xs:"0px 1px",sm:"0px 2px"}, overflow: 'hidden',display:"flex" }}>
+          <Grid key={movie.id} sx={{ cursor: 'pointer'}}>
+            <Grid item xs={12} sx={{ height:{xs:"250px",sm:"300px",md:"350px"},width:"250px", textAlign: 'center', padding:{xs:"0px 1px",sm:"0px 2px"}, overflow: 'hidden', }}>
               <img
                 onClick={() => handleOpen(movie)}
                 className="home-Img"

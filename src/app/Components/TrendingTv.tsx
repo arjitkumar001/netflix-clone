@@ -34,7 +34,7 @@ interface movieData {
 
 const style = {
   position: 'absolute' as 'absolute',
-  top: '50%',
+  top:"50%",
   left: '50%',
   transform: 'translate(-50%, -50%)',
   bgcolor: '#171717',
@@ -122,8 +122,6 @@ export default function TrendingTv() {
 
   return (
     <>
-    <Box style={{ paddingTop: "70px" }}>
-     
         {/* Modal start here=================================== */}
         {selectedTvShow && (
         <Modal
@@ -203,6 +201,7 @@ export default function TrendingTv() {
 
         </Modal>
       )}
+      <Box style={{ paddingTop: "70px" }}>
        <Container maxWidth="xl">
         <Typography variant='h4' sx={{ color: 'gray', padding: '10px 20px', textTransform: 'uppercase', textAlign: 'justify', fontSize: { xs: "20px" } }}>
           Trending
@@ -220,13 +219,13 @@ export default function TrendingTv() {
               key={tv.id}
               sx={{ cursor: 'pointer' }}
             >
-              <Grid sx={{ width:"250px", height:"350px",columnGap: "10px", textAlign: "center",  padding:{xs:"0px 1px",sm:"0px 2px"}, overflow: "hidden" }}>
+              <Grid sx={{  height:{xs:"250px",sm:"300px",md:"350px"},width:"250px",columnGap: "10px", textAlign: "center",  padding:{xs:"0px 1px",sm:"0px 2px"}, overflow: "hidden" }}>
                 <img
                   onClick={() => handleOpen(tv)}
                   className='home-Img'
                   src={'http://image.tmdb.org/t/p/w500' + tv.poster_path}
                   alt=''
-                  height="500px"
+                  height="100%"
                   width="100%"
                   loading='eager'
                 />

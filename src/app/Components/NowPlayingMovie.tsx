@@ -220,7 +220,7 @@ export default function NowPlaingMovie() {
               key={tv.id}
               sx={{ cursor: 'pointer' }}
             >
-              <Grid sx={{width:"250px", height:"350px", columnGap: "10px", textAlign: "center",  padding:{xs:"0px 1px",sm:"0px 2px"}, overflow: "hidden" }}>
+              <Grid sx={{ height:{xs:"250px",sm:"300px",md:"350px"},width:"300px", columnGap: "10px", textAlign: "center",  padding:{xs:"0px 1px",sm:"0px 2px"}, overflow: "hidden" }}>
                 <img
                   onClick={() => handleOpen(tv)}
                   className='home-Img'
