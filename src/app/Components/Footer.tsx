@@ -20,7 +20,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const style = {
   fontSize: "1.5rem",
   color: "white",
-  marginRight: "20px",
+  marginRight: "10px",
 };
 
 export default function RowAndColumnSpacing() {
@@ -29,7 +29,7 @@ export default function RowAndColumnSpacing() {
       <Container maxWidth="lg">
         <Grid container rowSpacing={1}>
           <Grid item xs={6} sm={3} md={3} lg={3} >
-            <Item sx={{ color: "gray", height: "250px", backgroundColor: "transparent", cursor: "pointer",rowGap:"10px" }}>
+            <Item sx={{ color: "gray", height: "250px", backgroundColor: "transparent", cursor: "pointer", }}>
               <Typography sx={{ textAlign: "center", }}>
                 <FacebookIcon sx={{ ...style, ":hover": { color: "red" } }} />
                 <InstagramIcon sx={{ ...style, ":hover": { color: "red" } }} />

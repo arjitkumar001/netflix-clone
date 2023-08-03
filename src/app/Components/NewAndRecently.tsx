@@ -221,13 +221,13 @@ export default function NewAndRecentlyMovie() {
               key={tv.id}
               sx={{ cursor: 'pointer' }}
             >
-              <Grid sx={{ width:"250px", height:"350px", columnGap: "10px", textAlign: "center",  padding:{xs:"0px 1px",sm:"0px 2px"}, overflow: "hidden" }}>
+              <Grid sx={{ height:{xs:"250px",sm:"300px",md:"350px"},width:"250px", columnGap: "10px", textAlign: "center",  padding:{xs:"0px 1px",sm:"0px 2px"}, overflow: "hidden" }}>
                 <img
                   onClick={() => handleOpen(tv)}
                   className='home-Img'
                   src={'http://image.tmdb.org/t/p/w500' + tv.poster_path}
                   alt=''
-                  height="500px"
+                  height="100%"
                   width="100%"
                   loading='eager'
                 />

@@ -212,7 +212,7 @@ const PopularmoviePage: React.FC = () => {
             movies.map((movie) => {
               return (
                 <Grid container key={movie.id} sx={{ cursor: "pointer", textAlign: "center" }}>
-                  <Grid sx={{ width:"250px", height:"350px",columnGap: "10px", textAlign: "center",  padding:{xs:"0px 1px",sm:"0px 2px"}, overflow: "hidden" }}>
+                  <Grid sx={{  height:{xs:"250px",sm:"300px",md:"350px"},width:"250px",columnGap: "10px", textAlign: "center",  padding:{xs:"0px 1px",sm:"0px 2px"}, overflow: "hidden" }}>
                     <img
                       onClick={() => handleOpen(movie)}
                       className='home-Img'

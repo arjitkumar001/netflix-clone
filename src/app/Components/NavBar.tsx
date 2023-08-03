@@ -99,9 +99,12 @@ function NavBar() {
                                 display: { xs: "flex", md: 'none' },
                             }}
                         >
+                              <Typography  sx={{cursor:"pointer",textAlign:"justify",borderBottom:"2px solid gray",display:"flex",alignItems:"center",fontWeight:"800",padding:"5px 10px",fontSize:"12px"}}>
+                            <Image src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Netflix_2015_N_logo.svg" alt="" height={25} width={20} className='' priority={true} /> <span style={{paddingLeft:"10px"}}> NetFlix Web</span>
+                            </Typography>
                             {pages.map((page, index) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu} sx={{ padding: { xs: "10px 100px" }, textTransform: "uppercase", fontWeight: "800", borderBottom: "1px solid gray" }}>
-                                    <Typography variant='body2' textAlign="center"><Link href={pageLink[index]} style={{ textDecoration: "none", fontWeight: "bold", color: "black" }}>{page}</Link></Typography>
+                                <MenuItem key={page} onClick={handleCloseNavMenu} sx={{ height:"auto",width:"200px",textTransform: "capatlize", fontWeight: "900",textAlign:"justify",":hover":{backgroundColor:"gray"} }}>
+                                    <Typography variant='body2'sx={{padding:"5px 0px",}} ><Link href={pageLink[index]} style={{ textDecoration: "none", fontWeight: "bold", color: "black",}}>{page}</Link></Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -109,14 +112,15 @@ function NavBar() {
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page, index) => (
-                            <Link href={pageLink[index]} key={page} passHref style={{ textDecoration: "none" }}>
+                             <Link href={pageLink[index]} key={page} passHref style={{ textDecoration: "none" }}>
                                 <Button
                                     onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                    sx={{ my: 2, color: 'white', display: 'block',textTransform:"capitalize", }}
                                 >
                                     {page}
                                 </Button>
                             </Link>
+                        
                         ))}
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>

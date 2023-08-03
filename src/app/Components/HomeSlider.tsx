@@ -16,6 +16,7 @@ import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import ReactPlayer from 'react-player';
 import PauseIcon from '@mui/icons-material/Pause';
 import UpcomingMovie from './UpcomingMovie';
+
 interface MovieData {
   id: number;
   title: string;
@@ -28,7 +29,7 @@ interface MovieData {
 const style = {
   position: 'absolute' as 'absolute',
   left: '50%',
-  top: "50%",
+  top:"40%",
   transform: 'translate(-50%, -50%)',
   bgcolor: '#171717',
 };
@@ -36,9 +37,8 @@ const style = {
 
 const overlayStyle: React.CSSProperties = {
   position: 'absolute',
-  bottom: '-100px',
+  bottom: '0px',
   maxWidth: '100%',
-  paddingBottom:"100px"
 };
 
 const ImageChangeComponent: React.FC = () => {
@@ -57,7 +57,7 @@ const ImageChangeComponent: React.FC = () => {
     width: '100%',
     height: '100vh',
     backgroundImage: movieData
-      ? `linear-gradient(to top, rgba(23,23,23,1), rgba(23, 23, 23, 0.6),rgba(0, 0, 0, 0.0)), url(https://image.tmdb.org/t/p/original${movieData.backdrop_path})`
+      ? `linear-gradient(to top, rgba(23,23,23,1.2), rgba(23, 23, 23,0.8),rgba(0, 0, 0, 0.4)), url(https://image.tmdb.org/t/p/original${movieData.backdrop_path})`
       : '',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
@@ -216,18 +216,17 @@ const ImageChangeComponent: React.FC = () => {
         </Modal>
       )}
       {movieData && (
-        <Box sx={{ ...overlayStyle, }}>
-          <Box sx={{ marginLeft: { xs: "10px", sm: "50px" }, maxWidth: "70%" }}>
-            <Typography sx={{ textTransform: "uppercase", fontSize: { xs: "28px", sm: "30px", md: "36px" } }}>{movieData.title}</Typography>
+        <Box sx={{ ...overlayStyle,}}>
+          <Box sx={{ marginLeft: { xs: "10px", sm: "50px" }, maxWidth: {xs:"70%",sm:"70%",md:"50%"}, }}>
+            <Typography sx={{ textTransform:"capitalize",fontWeight:"bold", fontSize: { xs: "1.2rem", sm: "1.5rem", md: "2rem" } }}>{movieData.title}</Typography>
             <Typography style={{ color: "#7FFF00" }}> {movieData.vote_average}% {movieData.release_date}  <span style={{ border: '2px solid black', padding: "2px 5px", color: "black", textTransform: "uppercase", fontWeight: "bolder" }}> {movieData.original_language}</span></Typography>
-            <Typography style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>{movieData.overview}</Typography>
+            <Typography style={{fontSize:"14px"  }}>{movieData.overview}</Typography>
             <Stack spacing={2} direction="row" marginTop={"10px"} sx={{ fontSize: { sm: '16px', xs: '14px', } }}>
               <Button onClick={() => handleOpen(movieData)} variant="contained" sx={{ color: "#000", fontWeight: "bold", backgroundColor: "white", ":hover": { backgroundColor: "#2F4F4F" }, padding: { xs: "5px 10px", }, fontSize: { xs: "12px" }, textAlign: "center" }}><PlayArrowIcon /> Play</Button>
               <Button onClick={() => handleOpen(movieData)} variant="outlined" sx={{ color: "white", border: "1px solid gray", padding: { xs: "5px 5px", }, fontSize: { xs: "12px" }, ":hover": { borderColor: "skyblue" } }}><InfoOutlinedIcon /> More info</Button>
             </Stack>
-
           </Box>
-          <UpcomingMovie />
+          <UpcomingMovie/>
         </Box>
       )}
     </Box>
